@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,16 @@ namespace VokabelTrainer.Services
 #else
         private static string Settings_DBPath => CommonServices.Instance.Settings.Load().DBPath;
 #endif
+
+        public DatabaseService()
+        {
+                
+        }
+
+        public DatabaseService(DbContextOptions<DatabaseService> options) : base(options)
+        {
+                
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
