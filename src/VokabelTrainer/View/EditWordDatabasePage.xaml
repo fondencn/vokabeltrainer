@@ -38,8 +38,7 @@
             </ListView>
             <StackLayout Orientation="Horizontal">
                 <Entry x:Name="nameEntry" Placeholder="Name" />
-                <Button Text="➕ Add"  />
-                <Button Text="➖ Remove" />
+                <Button Text="➕"  />
             </StackLayout>
         </StackLayout>
 
@@ -64,8 +63,7 @@
             <StackLayout Orientation="Horizontal">
                 <Entry x:Name="keyEntry" Placeholder="Key" />
                 <Entry x:Name="valueEntry" Placeholder="Value" />
-                <Button Text="➕ Add"  />
-                <Button Text="➖ Remove" />
+                <Button Text="➕"  />
             </StackLayout>
         </StackLayout>
         

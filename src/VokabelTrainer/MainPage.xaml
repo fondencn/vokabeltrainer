@@ -12,7 +12,7 @@
 
             <Image
                 Source="applogo.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
+                SemanticProperties.Description="Cute owl bot with hat"
                 HeightRequest="200"
                 HorizontalOptions="Center" />
 
