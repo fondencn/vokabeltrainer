@@ -1,10 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using VokabelTrainer.Model;
-using VokabelTrainer.Model.Api;
+﻿using Microsoft.Extensions.Logging;
 using VokabelTrainer.Services;
-using VokabelTrainer.View;
 
 namespace VokabelTrainer;
 
