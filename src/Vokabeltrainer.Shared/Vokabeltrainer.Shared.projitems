@@ -18,6 +18,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Model\TrainingItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\TrainingRun.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\WordItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\DatabaseService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Model\ClassDiagram1.cd" />

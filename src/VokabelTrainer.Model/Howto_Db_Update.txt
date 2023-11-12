@@ -1,0 +1,11 @@
+﻿Dieses Projekt existiert nur, damit das Shared-Project Vokabeltrainer.Model sowohl als Maui-App Projekt als auch als .Net7 Projekt existieren kann. 
+
+Um eine Entity Framework Schemaänderung zu erzeugen, muss das EF Tool auf das .Net 7 Projekt ausgeführt werden (CD in den entsprechenden Unterordner hier). 
+
+Das ist notwendig, weil die EF Tools nicht direkt mit Maui funktionieren. 
+
+Befehl um eine Migration zu erstellen:
+dotnet ef migrations add SCHEMANAME
+
+Befehl um die Datenbank zu aktualisieren (Migrations anwenden)
+dotnet ef database update

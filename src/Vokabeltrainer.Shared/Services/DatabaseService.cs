@@ -23,18 +23,16 @@ namespace VokabelTrainer.Services
 
         IList<TrainingRun> IDatabase.Runs => this.Runs.ToList();
 
+#if IS_MODEL
+        private const string Settings_DBPath = "../VokabelTrainer/Resources/Raw/Vokabeln.db";
+#else
+        private static string Settings_DBPath => CommonServices.Instance.Settings.Load().DBPath;
+#endif
 
-
-        public DatabaseService(DbContextOptions options) : base(options)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-        }
-
-        public static DatabaseService CreateDefault(IAppSettingsService settings)
-        {
-            AppSettings appSettings = settings.Load();
-            DbContextOptionsBuilder builder = new DbContextOptionsBuilder();
-            builder.UseSqlite("Filename=" + appSettings.DBPath);
-            return new DatabaseService(builder.Options);
+            optionsBuilder.UseSqlite("Filename=" + Settings_DBPath);
+            base.OnConfiguring(optionsBuilder);
         }
     }
 }

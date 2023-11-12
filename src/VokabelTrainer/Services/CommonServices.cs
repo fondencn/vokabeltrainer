@@ -38,7 +38,7 @@ namespace VokabelTrainer.Services
             builder.Services.AddSingleton<DialogService>();
             IAppSettingsService settings = new AppSettingsService();
             builder.Services.AddSingleton(settings);
-            builder.Services.AddSingleton<IDatabase>(DatabaseService.CreateDefault(settings));
+            builder.Services.AddSingleton<IDatabase>(new DatabaseService());
             builder.Services.AddDbContext<DatabaseService>(options => options.UseSqlite("Filename=" + settings.Load().DBPath));
             builder.Services.AddSingleton<IPropabilityGenerator>(new PropabilityGeneratorService());
             builder.Services.AddSingleton<INavigationService>(new NavigationService());
