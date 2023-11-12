@@ -19,5 +19,55 @@
                 VerticalOptions="Center"
                 SemanticProperties.HeadingLevel="Level1"/>
         </HorizontalStackLayout>
+
+        <!-- *****************************************  -->
+        <Label Text="Lessons"
+               Style="{StaticResource PageSubHeaderStyle}"/>
+        <StackLayout>
+            <ListView x:Name="listViewLessons"
+                      ItemsSource="{Binding Lessons}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding Name}" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <StackLayout Orientation="Horizontal">
+                <Entry x:Name="nameEntry" Placeholder="Name" />
+                <Button Text="➕ Add"  />
+                <Button Text="➖ Remove" />
+            </StackLayout>
+        </StackLayout>
+
+
+        <!-- *****************************************  -->
+        <Label Text="Words"
+               Style="{StaticResource PageSubHeaderStyle}"/>
+        <StackLayout>
+            <ListView x:Name="listViewWords"
+                      ItemsSource="{Binding Words}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding Key}" />
+                                <Label Text="{Binding Value}" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <StackLayout Orientation="Horizontal">
+                <Entry x:Name="keyEntry" Placeholder="Key" />
+                <Entry x:Name="valueEntry" Placeholder="Value" />
+                <Button Text="➕ Add"  />
+                <Button Text="➖ Remove" />
+            </StackLayout>
+        </StackLayout>
+        
     </VerticalStackLayout>
 </ContentPage>
