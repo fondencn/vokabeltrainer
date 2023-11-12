@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,13 +10,10 @@ namespace VokabelTrainer.ViewModel
 {
     public class EditWordDatabaseViewModel : BaseViewModel
     {
-        private IList<LessonViewModel> _lessons;
-        private IList<WordViewModel> _words;
-
         public override string Title => "Edit training data";
 
-        public IList<LessonViewModel> Lessons { get => _lessons; set => SetProperty(ref _lessons, value); }
-        public IList<WordViewModel> Words { get => _words; set => SetProperty(ref _words, value); }
+        public ObservableCollection<LessonViewModel> Lessons { get; } = new ObservableCollection<LessonViewModel>();
+        public ObservableCollection<WordViewModel> Words  { get; } = new ObservableCollection<WordViewModel>();
 
         public EditWordDatabaseViewModel()
         {
@@ -24,8 +22,16 @@ namespace VokabelTrainer.ViewModel
 
         public void Load()
         {
-            this.Words = CommonServices.Instance.Database.Words.Select(item => new WordViewModel(item)).ToList();
-            this.Lessons = CommonServices.Instance.Database.Lessons.Select(item => new LessonViewModel(item)).ToList();
+            this.Words.Clear();
+            this.Lessons.Clear();
+            foreach (var item in CommonServices.Instance.Database.Words.Select(item => new WordViewModel(item)))
+            {
+                this.Words.Add(item);
+            }
+            foreach(var item in CommonServices.Instance.Database.Lessons.Select(item => new LessonViewModel(item)))
+            {
+                this.Lessons.Add(item);
+            }
         }
     }
 }
