@@ -14,11 +14,11 @@ namespace VokabelTrainer.Services
                 
         }
 
-        public Task Navigate<T>() where T: Page
+        public Task Navigate<T>()
         {
-            Page page = CommonServices.Instance.GetPageInstance<T>();
+            T page = CommonServices.Instance.GetPageInstance<T>();
 
-            return Shell.Current.Navigation.PushAsync(page, true);
+            return Shell.Current.Navigation.PushAsync(page as Page, true);
         }
 
         public Task Back()

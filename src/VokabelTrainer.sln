@@ -5,6 +5,10 @@ VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VokabelTrainer", "VokabelTrainer\VokabelTrainer.csproj", "{47D0D958-A84B-4B96-AA5B-DB13183FAF8E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VokabelTrainer.Model", "VokabelTrainer.Model\VokabelTrainer.Model.csproj", "{1526E988-B860-432C-A64E-275591F38096}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Vokabeltrainer.Shared", "Vokabeltrainer.Shared\Vokabeltrainer.Shared.shproj", "{FA6F562D-E991-4F74-B7FD-467EE288BFFB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,11 +21,20 @@ Global
 		{47D0D958-A84B-4B96-AA5B-DB13183FAF8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47D0D958-A84B-4B96-AA5B-DB13183FAF8E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{47D0D958-A84B-4B96-AA5B-DB13183FAF8E}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{1526E988-B860-432C-A64E-275591F38096}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1526E988-B860-432C-A64E-275591F38096}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1526E988-B860-432C-A64E-275591F38096}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1526E988-B860-432C-A64E-275591F38096}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {13B290C7-8F54-4CEB-8855-F55104BE1DD4}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Vokabeltrainer.Shared\Vokabeltrainer.Shared.projitems*{1526e988-b860-432c-a64e-275591f38096}*SharedItemsImports = 5
+		Vokabeltrainer.Shared\Vokabeltrainer.Shared.projitems*{47d0d958-a84b-4b96-aa5b-db13183faf8e}*SharedItemsImports = 5
+		Vokabeltrainer.Shared\Vokabeltrainer.Shared.projitems*{fa6f562d-e991-4f74-b7fd-467ee288bffb}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal

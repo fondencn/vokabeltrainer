@@ -8,7 +8,7 @@ namespace VokabelTrainer.Model.Api
 {
     public interface INavigationService
     {
-        Task Navigate<T>() where T : Page;
+        Task Navigate<T>();
 
         Task Back();
     }

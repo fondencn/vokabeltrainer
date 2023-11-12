@@ -20,7 +20,7 @@ namespace VokabelTrainer.Services
         public IAppSettingsService Settings => _services.GetService<IAppSettingsService>();
         public IPropabilityGenerator Propability => _services.GetService<IPropabilityGenerator>();
 
-        public Page GetPageInstance<T>() where T : Page
+        public T GetPageInstance<T>()
         {
             return _services.GetService<T>();
         }

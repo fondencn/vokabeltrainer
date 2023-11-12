@@ -83,4 +83,6 @@
 	  </MauiXaml>
 	</ItemGroup>
 
+	<Import Project="..\Vokabeltrainer.Shared\Vokabeltrainer.Shared.projitems" Label="Shared" />
+
 </Project>
