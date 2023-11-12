@@ -1,24 +1,35 @@
-﻿namespace VokabelTrainer;
+﻿using VokabelTrainer.Model.Api;
+using VokabelTrainer.Services;
+using VokabelTrainer.View;
+
+namespace VokabelTrainer;
 
 public partial class MainPage : ContentPage
-{
-	int count = 0;
-
-	public MainPage()
+{	public MainPage()
 	{
 		InitializeComponent();
 	}
 
-	private void OnCounterClicked(object sender, EventArgs e)
-	{
-		count++;
 
-		if (count == 1)
-			CounterBtn.Text = $"Clicked {count} time";
-		else
-			CounterBtn.Text = $"Clicked {count} times";
+    private void UpdateHelloMessage()
+    {
+        string username = CommonServices.Instance.Settings.Load().Username;
+        this.lblHello.Text = String.IsNullOrEmpty(username) ? "Hello, unknown user, please switch to settings and enter your username." : "Hello, " + username + "!";
+    }
 
-		SemanticScreenReader.Announce(CounterBtn.Text);
-	}
+    private async void ButtonStartTraining_Clicked(object sender, EventArgs e)
+    {
+        await CommonServices.Instance.Navigation.Navigate<StartNewLessonPage>();
+    }
+
+    private async void ButtonSettings_Clicked(object sender, EventArgs e)
+    {
+        await  CommonServices.Instance.Navigation.Navigate<SettingsPage>();
+    }
+
+    protected override void OnNavigatedTo(NavigatedToEventArgs args)
+    {
+        UpdateHelloMessage();
+    }
 }
 

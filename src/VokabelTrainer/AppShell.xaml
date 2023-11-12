@@ -4,11 +4,32 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:VokabelTrainer"
-    Shell.FlyoutBehavior="Disabled">
+    xmlns:views="clr-namespace:VokabelTrainer.View">
+    <FlyoutItem Title="Start" Icon="ico_start.png" IsEnabled="True">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
+        </Tab>
+    </FlyoutItem>
+    <FlyoutItem Title="New Training" Icon="ico_startlesson.png">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate views:StartNewLessonPage}" />
+        </Tab>
+    </FlyoutItem>
+    <FlyoutItem Title="Highscore" Icon="ico_stats.png">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate views:ViewStatisticsPage}" />
+        </Tab>
+    </FlyoutItem>
+    <FlyoutItem Title="Training Data" Icon="ico_db.png">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate views:EditWordDatabasePage}" />
+        </Tab>
+    </FlyoutItem>
+    <FlyoutItem Title="Settings" Icon="ico_settings.png">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate views:SettingsPage}" />
+        </Tab>
+    </FlyoutItem>
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
 
 </Shell>

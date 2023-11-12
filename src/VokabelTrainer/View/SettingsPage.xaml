@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:VokabelTrainer.ViewModel"
+             x:Class="VokabelTrainer.View.SettingsPage"
+             Title="{Binding Title}" 
+             IconImageSource="ico_settings.png">
+    <ContentPage.BindingContext>
+        <vm:SettingsViewModel/>
+    </ContentPage.BindingContext>
+    <VerticalStackLayout
+            HorizontalOptions="StartAndExpand"
+            Spacing="25">
+        <HorizontalStackLayout>
+            <Image Source="ico_settings.png"
+                   WidthRequest="50"/>
+            <Label 
+                Text="{Binding Title}"
+                Style="{StaticResource PageHeaderStyle}"
+                VerticalOptions="Center"
+                SemanticProperties.HeadingLevel="Level1"/>
+        </HorizontalStackLayout>
+
+        <Label Text="Username" FontSize="Medium" />
+        <Entry Placeholder="Enter your username" Text="{Binding Username}" />
+
+        <Label Text="Database file" FontSize="Medium" Margin="0,20,0,0" />
+        <Entry Placeholder="Enter your DBPath" Text="{Binding DBPath}"/>
+
+        <Button Text="💾 Save" Command="{Binding SaveCommand}"/>
+    </VerticalStackLayout>
+</ContentPage>

@@ -1,4 +1,10 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using VokabelTrainer.Model;
+using VokabelTrainer.Model.Api;
+using VokabelTrainer.Services;
+using VokabelTrainer.View;
 
 namespace VokabelTrainer;
 
@@ -19,6 +25,7 @@ public static class MauiProgram
 		builder.Logging.AddDebug();
 #endif
 
-		return builder.Build();
+		return CommonServices.Instance.Initialize(builder);
 	}
+
 }
