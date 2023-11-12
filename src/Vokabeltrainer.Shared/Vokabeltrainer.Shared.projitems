@@ -9,6 +9,9 @@
     <Import_RootNamespace>Vokabeltrainer.Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20231112150626_CreateBaseSchema.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20231112150626_CreateBaseSchema.Designer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\DatabaseServiceModelSnapshot.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Api\IAppSettingsService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Api\IDatabase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Api\INavigationService.cs" />

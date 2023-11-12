@@ -27,7 +27,22 @@ namespace VokabelTrainer.Services
 #if IS_MODEL
         private const string Settings_DBPath = "../VokabelTrainer/Resources/Raw/Vokabeln.db";
 #else
-        private static string Settings_DBPath => CommonServices.Instance.Settings.Load().DBPath;
+        private static string Settings_DBPath
+        {
+            get
+            {
+                string fileInSettings = CommonServices.Instance.Settings.Load().DBPath;
+                if (Path.IsPathFullyQualified(fileInSettings))
+                {
+                    return fileInSettings;
+                } 
+                else
+                {
+                    string realPath = Path.Combine(FileSystem.Current.AppDataDirectory, fileInSettings.TrimStart('.', '/'));
+                    return realPath;
+                }
+            }
+        }
 #endif
 
         public DatabaseService()
@@ -42,8 +57,14 @@ namespace VokabelTrainer.Services
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+#if !IS_MODEL
+            CommonServices.Instance.Logging.LogDebug("Using DB " + Settings_DBPath);
+            CommonServices.Instance.Logging.LogDebug("DB Fulll Path interpretation is " + Path.GetFullPath(Settings_DBPath));
+#endif
             optionsBuilder.UseSqlite("Filename=" + Settings_DBPath);
             base.OnConfiguring(optionsBuilder);
         }
+
+        
     }
 }

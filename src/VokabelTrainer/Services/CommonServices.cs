@@ -38,7 +38,8 @@ namespace VokabelTrainer.Services
             builder.Services.AddSingleton<DialogService>();
             IAppSettingsService settings = new AppSettingsService();
             builder.Services.AddSingleton(settings);
-            builder.Services.AddSingleton<IDatabase>(new DatabaseService());
+            DatabaseService db = new DatabaseService();
+            builder.Services.AddSingleton<IDatabase>(db);
             builder.Services.AddDbContext<DatabaseService>(options => options.UseSqlite("Filename=" + settings.Load().DBPath));
             builder.Services.AddSingleton<IPropabilityGenerator>(new PropabilityGeneratorService());
             builder.Services.AddSingleton<INavigationService>(new NavigationService());
@@ -51,8 +52,15 @@ namespace VokabelTrainer.Services
 
 
 
+            // Create App Instance and apply deps
             var app =  builder.Build();
+
+            // Remember service registry for easy access later
             _services = app.Services;
+
+
+            // Apply db schema upon startup
+            db.Database.Migrate();
             return app;
         }
     }

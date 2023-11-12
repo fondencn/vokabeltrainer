@@ -9,3 +9,5 @@ dotnet ef migrations add SCHEMANAME
 
 Befehl um die Datenbank zu aktualisieren (Migrations anwenden)
 dotnet ef database update
+
+Damit die Migration dann beim Programmstart tatsächlich ausgeführt wird, muss sie in das Shared-Project VERSCHOBEN werden!
