@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,6 +39,7 @@ namespace VokabelTrainer.Services
             IAppSettingsService settings = new AppSettingsService();
             builder.Services.AddSingleton(settings);
             builder.Services.AddSingleton<IDatabase>(DatabaseService.CreateDefault(settings));
+            builder.Services.AddDbContext<DatabaseService>(options => options.UseSqlite("Filename=" + settings.Load().DBPath));
             builder.Services.AddSingleton<IPropabilityGenerator>(new PropabilityGeneratorService());
             builder.Services.AddSingleton<INavigationService>(new NavigationService());
 
@@ -46,6 +48,9 @@ namespace VokabelTrainer.Services
             builder.Services.AddTransient<SettingsPage>();
             builder.Services.AddTransient<StartNewLessonPage>();
             builder.Services.AddTransient<ViewStatisticsPage>();
+
+
+
             var app =  builder.Build();
             _services = app.Services;
             return app;

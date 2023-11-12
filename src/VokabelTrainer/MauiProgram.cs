@@ -26,6 +26,6 @@ public static class MauiProgram
 #endif
 
 		return CommonServices.Instance.Initialize(builder);
-	}
+    }
 
 }
