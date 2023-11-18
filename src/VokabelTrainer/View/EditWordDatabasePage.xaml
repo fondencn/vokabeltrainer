@@ -4,6 +4,7 @@
              xmlns:vm="clr-namespace:VokabelTrainer.ViewModel"
              x:Class="VokabelTrainer.View.EditWordDatabasePage"
              IconImageSource="ico_db.png"
+             x:Name="editWordDatabasePage"
              Title="{Binding Title}">
     <ContentPage.BindingContext>
         <vm:EditWordDatabaseViewModel/>
@@ -31,14 +32,15 @@
                         <ViewCell>
                             <StackLayout Orientation="Horizontal">
                                 <Label Text="{Binding Name}" />
+                                <Button Text="➖"  Command="{Binding Source={x:Reference editWordDatabasePage}, Path=BindingContext.RemoveLessonCommand}" CommandParameter="{Binding}"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
             <StackLayout Orientation="Horizontal">
-                <Entry x:Name="nameEntry" Placeholder="Name" />
-                <Button Text="➕"  />
+                <Entry x:Name="nameEntry" Text="{Binding NewLessonName}" Placeholder="Name" />
+                <Button Text="➕"  Command="{Binding AddLessonCommand}"/>
             </StackLayout>
         </StackLayout>
 
@@ -55,15 +57,16 @@
                             <StackLayout Orientation="Horizontal">
                                 <Label Text="{Binding Key}" />
                                 <Label Text="{Binding Value}" />
+                                <Button Text="➖"  Command="{Binding Source={x:Reference editWordDatabasePage} , Path=BindingContext.RemoveWordCommand}" CommandParameter="{Binding}"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
             <StackLayout Orientation="Horizontal">
-                <Entry x:Name="keyEntry" Placeholder="Key" />
-                <Entry x:Name="valueEntry" Placeholder="Value" />
-                <Button Text="➕"  />
+                <Entry x:Name="keyEntry" Text="{Binding NewEntryKey}" Placeholder="Key" />
+                <Entry x:Name="valueEntry" Text="{Binding NewEntryValue}" Placeholder="Value" />
+                <Button Text="➕"  Command="{Binding AddWordCommand}"/>
             </StackLayout>
         </StackLayout>
         

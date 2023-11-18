@@ -11,5 +11,7 @@ namespace VokabelTrainer.Model.Api
         IList<Lesson> Lessons { get;  }
         IList<WordItem> Words { get; }
         IList<TrainingRun> Runs { get; }
+
+        void SaveChanges();
     }
 }
