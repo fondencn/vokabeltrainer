@@ -47,7 +47,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Resources\Splash\splash.png"/>
+    <None Remove="Resources\Images\crying_owl.jpg" />
+    <None Remove="Resources\Images\party_owl.jpg" />
+    <None Remove="Resources\Splash\splash.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -56,6 +58,7 @@
   </ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="akgul.Maui.DataGrid" Version="3.0.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.13" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.13" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
@@ -69,6 +72,9 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="View\EditWordDatabasePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\RunPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\SettingsPage.xaml">

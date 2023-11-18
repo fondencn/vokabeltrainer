@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:VokabelTrainer.ViewModel"
+             x:Class="VokabelTrainer.View.RunPage"
+             x:DataType="vm:RunPageViewModel"
+             Title="{Binding Title}" >
+    <VerticalStackLayout>
+        <Label 
+            Text="{Binding Title}"
+            Style="{StaticResource PageHeaderStyle}"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+
+        <Label Text="Translate to German!"/>
+        <Label 
+            Text="{Binding CurrentWord.ForeignWord}"
+            Style="{StaticResource PageSubHeaderStyle}"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Entry Text="{Binding CurrentGuess}"
+            Placeholder="Enter German word!"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Button Text="Check!"
+            Command="{Binding GuessCommand}"/>
+
+        <VerticalStackLayout
+            IsVisible="{Binding IsCurrentGuessCorrect}">
+            <Label 
+                Text="Yeehaaaw! That's correct!" />
+            <Image 
+                Source="party_owl.jpg" 
+                MaximumWidthRequest="300"/>
+        </VerticalStackLayout>
+        <VerticalStackLayout 
+            IsVisible="{Binding IsCurrentGuessWrong}">
+            <Label 
+                Text="Sorry, that's not right. Please try again!" />
+            <Image 
+                Source="crying_owl.jpg" 
+                MaximumWidthRequest="300"/>
+        </VerticalStackLayout>
+            
+        <Button 
+            Text="➡ Continue" 
+            IsVisible="{Binding IsCurrentGuessCorrect}"
+            Command="{Binding ContinueCommand}"/>
+    </VerticalStackLayout>
+</ContentPage>

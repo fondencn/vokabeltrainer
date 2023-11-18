@@ -19,5 +19,12 @@
                 VerticalOptions="Center"
                 SemanticProperties.HeadingLevel="Level1"/>
         </HorizontalStackLayout>
+
+        <Label 
+            Text="Pick a lesson to start!"/>
+        <Picker Title="Pick a lesson"
+                ItemsSource="{Binding Lessons}"
+                SelectedItem="{Binding SelectedLesson}"/>
+        <Button Text="Start" Command="{Binding StartLessonCommand}"/>
     </VerticalStackLayout>
 </ContentPage>

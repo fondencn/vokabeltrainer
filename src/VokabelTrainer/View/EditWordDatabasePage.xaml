@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:VokabelTrainer.ViewModel"
+             xmlns:dg="clr-namespace:Maui.DataGrid;assembly=Maui.DataGrid"
              x:Class="VokabelTrainer.View.EditWordDatabasePage"
              IconImageSource="ico_db.png"
              x:Name="editWordDatabasePage"
@@ -22,53 +23,146 @@
         </HorizontalStackLayout>
 
         <!-- *****************************************  -->
-        <Label Text="Lessons"
+        <Label Text="Lessons database"
                Style="{StaticResource PageSubHeaderStyle}"/>
         <StackLayout>
-            <ListView x:Name="listViewLessons"
+            <!--<ListView x:Name="listViewLessons"
                       ItemsSource="{Binding Lessons}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding Name}" />
-                                <Button Text="➖"  Command="{Binding Source={x:Reference editWordDatabasePage}, Path=BindingContext.RemoveLessonCommand}" CommandParameter="{Binding}"/>
+                                <Label Text="{Binding Name}" WidthRequest="200"/>
+                                <Button Text="➖"  Command="{Binding Source={x:Reference editWordDatabasePage}, Path=BindingContext. RemoveLessonCommand}" CommandParameter="{Binding}"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-            </ListView>
+            </ListView>-->
+            <dg:DataGrid
+                x:Name="dgLessons"
+                SelectionEnabled="False"
+                ItemsSource="{Binding Lessons}">
+                <dg:DataGrid.Columns>
+                    <dg:DataGridColumn 
+                        Title="Name"
+                        SortingEnabled="True"
+                        PropertyName="Name"/>
+
+                    <dg:DataGridColumn Title="🗑"
+                         Width="50"
+                         SortingEnabled="false">
+                        <dg:DataGridColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button  
+                                    BackgroundColor="{StaticResource Blue100Accent}"
+                                    Text="➖"  Command="{Binding Source={x:Reference editWordDatabasePage} , Path=BindingContext.RemoveLessonCommand}" CommandParameter="{Binding}"/>
+                            </DataTemplate>
+                        </dg:DataGridColumn.CellTemplate>
+                    </dg:DataGridColumn>
+                </dg:DataGrid.Columns>
+
+                <!-- Defining row color settings -->
+                <dg:DataGrid.RowsBackgroundColorPalette>
+                    <dg:PaletteCollection>
+                        <Color>White</Color>
+                        <Color>LightGray</Color>
+                    </dg:PaletteCollection>
+                </dg:DataGrid.RowsBackgroundColorPalette>
+            </dg:DataGrid>
+            <Label Text="Add a new lesson:" FontAttributes="Italic" Margin="0,10,0,0"/>
             <StackLayout Orientation="Horizontal">
-                <Entry x:Name="nameEntry" Text="{Binding NewLessonName}" Placeholder="Name" />
-                <Button Text="➕"  Command="{Binding AddLessonCommand}"/>
+                <Entry x:Name="nameEntry" Text="{Binding NewLessonName}" Placeholder="Name" WidthRequest="200" />
+                <Button Text="➕ Add"  Command="{Binding AddLessonCommand}" Margin="5,0,0,0"/>
             </StackLayout>
         </StackLayout>
 
 
         <!-- *****************************************  -->
-        <Label Text="Words"
+        <Label Text="Words database"
+               Margin="0,10,0,0"
                Style="{StaticResource PageSubHeaderStyle}"/>
         <StackLayout>
-            <ListView x:Name="listViewWords"
+            <!--<ListView x:Name="listViewWords"
                       ItemsSource="{Binding Words}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding Key}" />
-                                <Label Text="{Binding Value}" />
+                                <Label Text="{Binding OwnWord}" />
+                                <Label Text="{Binding ForeignWord}" />
+                                <Label Text="{Binding Info}" />
                                 <Button Text="➖"  Command="{Binding Source={x:Reference editWordDatabasePage} , Path=BindingContext.RemoveWordCommand}" CommandParameter="{Binding}"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-            </ListView>
+            </ListView>-->
+
+            <dg:DataGrid 
+                x:Name="dgWords"
+                ItemsSource="{Binding Words}"
+                SelectionEnabled="False" >
+
+
+                <!-- Defining columns for the data grid -->
+                <!-- Adjust the PropertyName, and other details as per your dataset -->
+                <dg:DataGrid.Columns>
+                    <!--<dg:DataGridColumn Title="Image" PropertyName="Image" Width="70"
+                         SortingEnabled="True">
+                        <dg:DataGridColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding Image}" Aspect="AspectFill" />
+                            </DataTemplate>
+                        </dg:DataGridColumn.CellTemplate>
+                    </dg:DataGridColumn>-->
+
+                    <dg:DataGridColumn 
+                        Title="Own word" 
+                        PropertyName="OwnWord" 
+                        SortingEnabled="True" />
+                    <dg:DataGridColumn 
+                        Title="Foreign word" 
+                        PropertyName="ForeignWord" 
+                        SortingEnabled="True" />
+                    <dg:DataGridColumn 
+                        Title="Info" 
+                        PropertyName="Info" 
+                        SortingEnabled="True" />
+                    <dg:DataGridColumn Title="🗑"
+                         Width="50"
+                         SortingEnabled="false">
+                        <dg:DataGridColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button 
+                                    BackgroundColor="{StaticResource Blue100Accent}"
+                                    Text="➖"  Command="{Binding Source={x:Reference editWordDatabasePage} , Path=BindingContext.RemoveWordCommand}" CommandParameter="{Binding}"/>
+                            </DataTemplate>
+                        </dg:DataGridColumn.CellTemplate>
+                    </dg:DataGridColumn>
+
+                    <!-- Add more columns as needed for your dataset -->
+
+                </dg:DataGrid.Columns>
+
+                <!-- Defining row color settings -->
+                <dg:DataGrid.RowsBackgroundColorPalette>
+                    <dg:PaletteCollection>
+                        <Color>White</Color>
+                        <Color>LightGray</Color>
+                    </dg:PaletteCollection>
+                </dg:DataGrid.RowsBackgroundColorPalette>
+            </dg:DataGrid>
+
+            <Label Text="Add a new word:" FontAttributes="Italic" Margin="0,10,0,0"/>
+
             <StackLayout Orientation="Horizontal">
-                <Entry x:Name="keyEntry" Text="{Binding NewEntryKey}" Placeholder="Key" />
-                <Entry x:Name="valueEntry" Text="{Binding NewEntryValue}" Placeholder="Value" />
-                <Button Text="➕"  Command="{Binding AddWordCommand}"/>
+                <Entry x:Name="keyEntry" Text="{Binding NewEntryKey}" Placeholder="Foreign word" WidthRequest="100"/>
+                <Entry x:Name="valueEntry" Text="{Binding NewEntryValue}" Placeholder="Own word"  WidthRequest="100" Margin="5,0,5,0"/>
+                <Entry x:Name="infoEntry" Text="{Binding NewEntryInfo}" Placeholder="Info"  WidthRequest="100" Margin="5,0,5,0"/>
+                <Button Text="➕ Add"  Command="{Binding AddWordCommand}"/>
             </StackLayout>
         </StackLayout>
-        
+
     </VerticalStackLayout>
 </ContentPage>

@@ -39,12 +39,21 @@ namespace VokabelTrainer.ViewModel
             set { SetProperty(ref _NewEntryKey, value); }
         }
 
-        private string _NewEntryaValue;
+        private string _NewEntryValue;
 
         public string NewEntryValue
         {
-            get { return _NewEntryaValue; }
-            set { SetProperty(ref _NewEntryaValue, value); }
+            get { return _NewEntryValue; }
+            set { SetProperty(ref _NewEntryValue, value); }
+        }
+
+
+        private string _NewEntryInfo;
+
+        public string NewEntryInfo
+        {
+            get { return _NewEntryInfo; }
+            set { SetProperty(ref _NewEntryInfo, value); }
         }
 
 
@@ -123,11 +132,14 @@ namespace VokabelTrainer.ViewModel
                 WordItem item = new WordItem()
                 {
                     ForeignWord = NewEntryKey,
-                    OwnWord = NewEntryValue
+                    OwnWord = NewEntryValue, 
+                    Info = NewEntryInfo ?? String.Empty
                 };
                 CommonServices.Instance.Database.Words.Add(item);
                 CommonServices.Instance.Database.SaveChanges();
                 this.Words.Add(new WordViewModel(item));
+                this.NewEntryKey = null;
+                this.NewEntryValue = null;
             }
         }
 
@@ -152,6 +164,7 @@ namespace VokabelTrainer.ViewModel
                 CommonServices.Instance.Database.Lessons.Add(item);
                 CommonServices.Instance.Database.SaveChanges();
                 this.Lessons.Add(new LessonViewModel(item));
+                this.NewLessonName = null;
             }
         }
 

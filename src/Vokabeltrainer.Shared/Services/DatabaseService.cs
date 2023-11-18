@@ -13,15 +13,12 @@ namespace VokabelTrainer.Services
     public class DatabaseService : DbContext, IDatabase
     {
         #region IDatabase Implementation
-        IList<Lesson> IDatabase.Lessons => this.LessonsSet.ToList();
-        IList<TrainingRun> IDatabase.Runs => this.RunsSet.ToList();
-        IList<WordItem> IDatabase.Words => this.WordsSet.ToList();
         void IDatabase.SaveChanges() => this.SaveChanges();
-        #endregion
 
-        private DbSet<Lesson> LessonsSet => this.Set<Lesson>();
-        private DbSet<WordItem> WordsSet => this.Set<WordItem>();
-        private DbSet<TrainingRun> RunsSet => this.Set<TrainingRun>();
+        public DbSet<Lesson> Lessons => this.Set<Lesson>();
+        public DbSet<WordItem> Words => this.Set<WordItem>();
+        public DbSet<TrainingRun> Runs => this.Set<TrainingRun>();
+        #endregion
 
 
 

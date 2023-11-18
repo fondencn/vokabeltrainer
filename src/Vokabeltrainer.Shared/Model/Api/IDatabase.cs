@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,9 @@ namespace VokabelTrainer.Model.Api
 {
     public interface IDatabase
     {
-        IList<Lesson> Lessons { get;  }
-        IList<WordItem> Words { get; }
-        IList<TrainingRun> Runs { get; }
+        DbSet<Lesson> Lessons { get;  }
+        DbSet<WordItem> Words { get; }
+        DbSet<TrainingRun> Runs { get; }
 
         void SaveChanges();
     }

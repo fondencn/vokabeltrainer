@@ -7,6 +7,7 @@ namespace VokabelTrainer.Model.Api
 {
     public interface IPropabilityGenerator
     {
-        double Generate(WordItem word);
+        public void LoadFor(Lesson lesson);
+        WordItem GetNextWord();
     }
 }

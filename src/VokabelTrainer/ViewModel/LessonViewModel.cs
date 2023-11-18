@@ -19,6 +19,7 @@ namespace VokabelTrainer.ViewModel
 
         public LessonViewModel(Lesson model) : base(model)
         {
+            this.Name = model.Name;
         }
     }
 }
