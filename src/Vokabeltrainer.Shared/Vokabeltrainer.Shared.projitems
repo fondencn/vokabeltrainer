@@ -13,6 +13,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Migrations\20231112150626_CreateBaseSchema.Designer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Migrations\20231119121341_FixWordLessonRelations.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Migrations\20231119121341_FixWordLessonRelations.Designer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20231119181724_AddTrainingItems.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20231119181724_AddTrainingItems.Designer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Migrations\DatabaseServiceModelSnapshot.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Api\IAppSettingsService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Api\IDatabase.cs" />

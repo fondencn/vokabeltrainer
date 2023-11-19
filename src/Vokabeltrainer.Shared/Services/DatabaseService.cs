@@ -18,6 +18,7 @@ namespace VokabelTrainer.Services
         public DbSet<Lesson> Lessons => this.Set<Lesson>();
         public DbSet<WordItem> Words => this.Set<WordItem>();
         public DbSet<TrainingRun> Runs => this.Set<TrainingRun>();
+        public DbSet<TrainingItem> RunItems => this.Set<TrainingItem>();
         #endregion
 
 

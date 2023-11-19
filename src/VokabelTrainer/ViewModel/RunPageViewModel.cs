@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using VokabelTrainer.Model;
 using VokabelTrainer.Services;
 
 namespace VokabelTrainer.ViewModel
@@ -19,6 +20,8 @@ namespace VokabelTrainer.ViewModel
 
         public override string Title => "Training for Lesson  \"" + Lesson.Name + "\"";
 
+        public double PercentCorrect => Run.PercentCorrect;
+
         public LessonViewModel Lesson { get; }
 
         public WordViewModel CurrentWord 
@@ -27,9 +30,16 @@ namespace VokabelTrainer.ViewModel
             private set => SetProperty(ref _currentWord, value);
         }
 
+        public TrainingRun Run { get; }
+
         public RunPageViewModel(LessonViewModel lesson)
         {
             Lesson = lesson;
+            Run = new TrainingRun();
+            Run.Lesson = lesson.Model;
+            Run.Id_Lesson = lesson.Id;
+            CommonServices.Instance.Database.Runs.Add(Run);
+            CommonServices.Instance.Database.SaveChanges();
             this.Continue();
 
             this.AddPropertyChangedHandler(nameof(CurrentGuess), () => OnPropertyChanged(nameof(IsCheckEnabled)));
@@ -87,14 +97,36 @@ namespace VokabelTrainer.ViewModel
 
         public void Guess()
         {
+            if(this.IsCurrentGuessCorrect)
+            {
+                /* Enter Taste bei bereits korrekter Eingabe macht weiter mit dem nächsten Wort */
+                Continue();
+                return;
+            }
+
             bool isCorrect = String.Equals( this.CurrentGuess, this.CurrentWord.OwnWord, StringComparison.CurrentCulture );
             this.IsCurrentGuessCorrect = isCorrect;
             this.IsCurrentGuessWrong = !isCorrect;
+
+            TrainingItem trainingItem = new TrainingItem()
+            {
+                Id_TrainingRun = this.Run.Id, 
+                Id_Word = this.CurrentWord.Id, 
+                IsCorrect = isCorrect, 
+                TrainingDate = DateTime.Now, 
+                Word = this.CurrentWord.Model, 
+                Run = this.Run
+            };
+            this.Run.Items.Add(trainingItem);
+            CommonServices.Instance.Database.RunItems.Add(trainingItem);
+            CommonServices.Instance.Database.SaveChanges();
+
+            this.OnPropertyChanged(nameof(PercentCorrect));
         }
 
         public void Continue()
         {
-            // Nächstes Wort berechnen und Eingabe zurücksetzen...
+            /* Nächstes Wort berechnen und Eingabe zurücksetzen... */
             this.CurrentGuess = null;
             this.CurrentWord = null;
             this.IsCurrentGuessCorrect = false;

@@ -11,28 +11,25 @@ namespace VokabelTrainer.Model
     [Table("TrainingRuns")]
     public class TrainingRun
     {
-
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        [ForeignKey("Lesson")]
         public int Id_Lesson { get; set; }
 
-        [NotMapped]
         public Lesson Lesson { get; set; }
 
         public DateTime StartDate { get; set; }
 
         public DateTime EndDate { get; set; }
 
-
-        [NotMapped]
-        public IList<TrainingItem> Items { get; set; }
+        public IList<TrainingItem> Items { get; set; } = new List<TrainingItem>();
 
         [NotMapped]
         public int Count => Items?.Count ?? 0;
 
         [NotMapped]
-        public double PercentCorrect => Count > 0 ? (Items.Where(item => item.IsCorrect).Count() / Count) : 0;
+        public double PercentCorrect => Count > 0 ? (double)(Items.Where(item => item.IsCorrect).Count() / (double)Count) : 0;
     }
 }

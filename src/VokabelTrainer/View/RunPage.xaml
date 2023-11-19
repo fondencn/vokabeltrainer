@@ -5,76 +5,100 @@
              x:Class="VokabelTrainer.View.RunPage"
              x:DataType="vm:RunPageViewModel"
              Title="{Binding Title}" >
-    <FlexLayout Direction="Row"
+    <Grid
+        HorizontalOptions="Center"
+        VerticalOptions="Fill">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <FlexLayout Direction="Row"
+                    Wrap="Wrap"
                 HorizontalOptions="Center">
-        <VerticalStackLayout
-            Margin="10"
-            IsVisible="{Binding IsCurrentGuessCorrect}">
-            <Image 
-                Source="party_owl.jpg" 
-                Margin="3"
-                MaximumWidthRequest="200"/>
-            <Label 
-                HorizontalOptions="Center"
-                FontAttributes="Italic"
-                Margin="3"
-                Text="Yeehaaaw! That's correct!" />
-        </VerticalStackLayout>
-        <VerticalStackLayout 
-            Margin="10"
-            IsVisible="{Binding IsCurrentGuessWrong}">
-            <Image 
-                Margin="3"
-                Source="thinking_owl.jpg" 
-                MaximumWidthRequest="200"/>
-            <Label 
-                Margin="3"
-                HorizontalOptions="Center"
-                FontAttributes="Italic"
-                Text="Sorry, that's not right. Please try again!" />
-        </VerticalStackLayout>
+            
 
-        <VerticalStackLayout
+            <VerticalStackLayout
                 VerticalOptions="Start" 
                 HorizontalOptions="Center"
-            Margin="5">
-            <!--<Label 
+                Margin="10">
+                <!--<Label 
             Text="{Binding Title}"
             Style="{StaticResource PageHeaderStyle}"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />-->
 
-            <Label Text="Translate the following word: "
+                <Label Text="Translate the following word: "
                    Margin="3"
                    HorizontalOptions="Center"
                    VerticalOptions="Center"/>
-            <Label 
+                <Label 
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     Margin="3"
                     TextColor="{StaticResource Primary}"
                     Text="{Binding CurrentWord.ForeignWord}"
                     Style="{StaticResource PageHeaderStyle}" />
-            <Entry Text="{Binding CurrentGuess}"
-                Placeholder="Translation"
-                WidthRequest="150"
-                Margin="5"
-                VerticalOptions="Center" 
-                HorizontalOptions="Center" />
-            <Button Text="❓❓❓ Check"
-                IsVisible="{Binding IsCheckEnabled}"
-                WidthRequest="150"
-                Margin="5"
-                Command="{Binding GuessCommand}"/>
+                <Entry Text="{Binding CurrentGuess}"
+                    Placeholder="Translation"
+                    WidthRequest="150"
+                    Margin="5"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center" 
+                    ReturnCommand="{Binding GuessCommand}"/>
+                <Button Text="❓❓❓ Check"
+                    IsVisible="{Binding IsCheckEnabled}"
+                    WidthRequest="150"
+                    Margin="5"
+                    Command="{Binding GuessCommand}"/>
 
-            <Button 
-            Text="➡ Continue" 
-            Margin="3"
-            WidthRequest="150"
-            HorizontalOptions="Center"
-            IsVisible="{Binding IsCurrentGuessCorrect}"
-            Command="{Binding ContinueCommand}"/>
+                <Button 
+                    Text="➡ Continue" 
+                    Margin="3"
+                    WidthRequest="150"
+                    HorizontalOptions="Center"
+                    IsVisible="{Binding IsCurrentGuessCorrect}"
+                    Command="{Binding ContinueCommand}"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout
+                Margin="10"
+                IsVisible="{Binding IsCurrentGuessCorrect}">
+                <Image 
+                    Source="party_owl.jpg" 
+                    Margin="3"
+                    MaximumWidthRequest="200"/>
+                <Label 
+                    HorizontalOptions="Center"
+                    FontAttributes="Italic"
+                    Margin="3"
+                    Text="Yeehaaaw! That's correct!" />
+            </VerticalStackLayout>
+            <VerticalStackLayout 
+                Margin="10"
+                IsVisible="{Binding IsCurrentGuessWrong}">
+                <Image 
+                    Margin="3"
+                    Source="thinking_owl.jpg" 
+                    MaximumWidthRequest="200"/>
+                <Label 
+                    Margin="3"
+                    HorizontalOptions="Center"
+                    FontAttributes="Italic"
+                    Text="Sorry, that's not right. Please try again!" />
+            </VerticalStackLayout>
+        </FlexLayout>
+
+        <VerticalStackLayout   Margin="0,20,0,0"
+                               Grid.Row="1">
+            
+            <HorizontalStackLayout  VerticalOptions="End" HorizontalOptions="Center">
+                <Label Text="Training statistics: " Margin="3" FontSize="10"/>
+                <Label Text="Correct: " Margin="3" FontSize="10"/>
+                <Label Text="{Binding PercentCorrect, StringFormat='{0:P1}'}" Margin="3" FontSize="10"/>
+                <Label Text=", words in lesson: " Margin="3" FontSize="10"/>
+                <Label Text="{Binding Lesson.Words.Count}" Margin="3" FontSize="10"/>
+            </HorizontalStackLayout>
+            <ProgressBar Progress="{Binding PercentCorrect}" HorizontalOptions="Center" Margin="3" WidthRequest="300"/>
         </VerticalStackLayout>
-    </FlexLayout>
-
+    </Grid>
 </ContentPage>

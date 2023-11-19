@@ -12,10 +12,10 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 
 		<!-- Display name -->
-		<ApplicationTitle>VokabelTrainer</ApplicationTitle>
+		<ApplicationTitle>Vocab-Owl-Ary</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.vokabeltrainer</ApplicationId>
+		<ApplicationId>com.fonden.vokabeltrainer</ApplicationId>
 		<ApplicationIdGuid>aa33ab47-f304-41c4-bcc8-16fd0fdb7e85</ApplicationIdGuid>
 
 		<!-- Versions -->

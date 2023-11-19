@@ -12,6 +12,7 @@ namespace VokabelTrainer.Model.Api
         DbSet<Lesson> Lessons { get;  }
         DbSet<WordItem> Words { get; }
         DbSet<TrainingRun> Runs { get; }
+        DbSet<TrainingItem> RunItems { get; }
 
         void SaveChanges();
     }

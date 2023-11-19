@@ -162,7 +162,7 @@
                 Wrap="Wrap"
                 IsVisible="{Binding IsLessonSelected}">
                 <Entry x:Name="keyEntry" Text="{Binding NewEntryKey}" Placeholder="Foreign word" WidthRequest="150" Margin="3"/>
-                <Entry x:Name="valueEntry" Text="{Binding NewEntryValue}" Placeholder="Own word"  WidthRequest="150" Margin="3"/>
+                <Entry x:Name="valueEntry" Text="{Binding NewEntryValue}" Placeholder="Own word"  WidthRequest="150" Margin="3" ReturnCommand="{Binding AddWordCommand}"/>
                 <Entry x:Name="infoEntry" Text="{Binding NewEntryInfo}" Placeholder="Info"  WidthRequest="150" Margin="3"/>
                 <Picker x:Name="lessonPicker" ItemsSource="{Binding Lessons}" SelectedItem="{Binding SelectedLesson}" ItemDisplayBinding="{Binding Name}"  WidthRequest="150" Margin="3"/>
                 <Button Text="➕ Add"  Command="{Binding AddWordCommand}" Margin="3" WidthRequest="150"/>
