@@ -2,13 +2,18 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:VokabelTrainer.ViewModel"
+             xmlns:dg="clr-namespace:Maui.DataGrid;assembly=Maui.DataGrid"
              x:Class="VokabelTrainer.View.ViewStatisticsPage"
+             NavigatedTo="ContentPage_NavigatedTo"
              IconImageSource="ico_stats.png"
              Title="{Binding Title}">
     <ContentPage.BindingContext>
         <vm:ViewStatisticsViewModel/>
     </ContentPage.BindingContext>
-    <VerticalStackLayout
+
+
+    <ScrollView HorizontalScrollBarVisibility="Never">
+        <VerticalStackLayout
             Spacing="25">
         <HorizontalStackLayout>
             <Image Source="ico_stats.png"
@@ -19,5 +24,58 @@
                 VerticalOptions="Center"
                 SemanticProperties.HeadingLevel="Level1"/>
         </HorizontalStackLayout>
+
+
+        <dg:DataGrid 
+                x:Name="dgTrainingRuns"
+                Margin="3"
+                ItemsSource="{Binding Runs}"
+                SelectionEnabled="False" >
+
+
+            <!-- Defining columns for the data grid -->
+            <!-- Adjust the PropertyName, and other details as per your dataset -->
+            <dg:DataGrid.Columns>
+                <!--<dg:DataGridColumn Title="Image" PropertyName="Image" Width="70"
+                         SortingEnabled="True">
+                        <dg:DataGridColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding Image}" Aspect="AspectFill" />
+                            </DataTemplate>
+                        </dg:DataGridColumn.CellTemplate>
+                    </dg:DataGridColumn>-->
+
+                <dg:DataGridColumn 
+                        Title="Lesson" 
+                        PropertyName="LessonName" 
+                        SortingEnabled="True" />
+                <dg:DataGridColumn 
+                        Title="Start" 
+                        PropertyName="StartDate" 
+                        SortingEnabled="True" />
+                <dg:DataGridColumn 
+                        Title="End" 
+                        PropertyName="EndDate" />
+                <dg:DataGridColumn 
+                        Title="Correct %" 
+                        PropertyName="PercentCorrect" />
+                <dg:DataGridColumn 
+                        Title="Training count" 
+                        PropertyName="Count" />
+
+                <!-- Add more columns as needed for your dataset -->
+
+            </dg:DataGrid.Columns>
+
+            <!-- Defining row color settings -->
+            <dg:DataGrid.RowsBackgroundColorPalette>
+                <dg:PaletteCollection>
+                    <Color>White</Color>
+                    <Color>LightGray</Color>
+                </dg:PaletteCollection>
+            </dg:DataGrid.RowsBackgroundColorPalette>
+            </dg:DataGrid>
+
     </VerticalStackLayout>
+        </ScrollView>
 </ContentPage>

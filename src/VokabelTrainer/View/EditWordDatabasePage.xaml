@@ -10,7 +10,9 @@
     <ContentPage.BindingContext>
         <vm:EditWordDatabaseViewModel/>
     </ContentPage.BindingContext>
+    <ScrollView HorizontalScrollBarVisibility="Never">
     <VerticalStackLayout
+        Padding="5,5,15,0"
             Spacing="25">
         <HorizontalStackLayout>
             <Image Source="ico_db.png"
@@ -170,4 +172,5 @@
         </StackLayout>
 
     </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

@@ -4,6 +4,7 @@
              xmlns:vm="clr-namespace:VokabelTrainer.ViewModel"
              x:Class="VokabelTrainer.View.RunPage"
              x:DataType="vm:RunPageViewModel"
+             NavigatedFrom="ContentPage_NavigatedFrom"
              Title="{Binding Title}" >
     <Grid
         HorizontalOptions="Center"

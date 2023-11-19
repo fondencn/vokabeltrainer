@@ -38,6 +38,7 @@ namespace VokabelTrainer.ViewModel
             Run = new TrainingRun();
             Run.Lesson = lesson.Model;
             Run.Id_Lesson = lesson.Id;
+            Run.StartDate = DateTime.Now;
             CommonServices.Instance.Database.Runs.Add(Run);
             CommonServices.Instance.Database.SaveChanges();
             this.Continue();
@@ -134,6 +135,12 @@ namespace VokabelTrainer.ViewModel
 
 
             this.CurrentWord = new WordViewModel( CommonServices.Instance.Propability.GetNextWord());
+        }
+
+        public void EndRun()
+        {
+            this.Run.EndDate = DateTime.Now;
+            CommonServices.Instance.Database.SaveChanges();
         }
     }
 }
