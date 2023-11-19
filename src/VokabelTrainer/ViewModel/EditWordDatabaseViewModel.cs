@@ -69,7 +69,6 @@ namespace VokabelTrainer.ViewModel
         public EditWordDatabaseViewModel()
         {
             this.AddPropertyChangedHandler(nameof(SelectedLesson), () => OnPropertyChanged(nameof(IsLessonSelected)));
-            Load();
         }
 
         public void Load()
@@ -87,6 +86,7 @@ namespace VokabelTrainer.ViewModel
             {
                 this.Lessons.Add(item);
             }
+            OnPropertyChanged("Lessons");
         }
 
         public ICommand AddWordCommand
@@ -155,6 +155,7 @@ namespace VokabelTrainer.ViewModel
                 this.SelectedLesson.Words.Add(wvm);
                 this.NewEntryKey = null;
                 this.NewEntryValue = null;
+                this.NewEntryInfo = null;
             }
         }
 

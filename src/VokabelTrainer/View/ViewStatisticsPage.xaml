@@ -26,24 +26,47 @@
         </HorizontalStackLayout>
 
 
-        <dg:DataGrid 
+            <ListView
+                x:Name="dgTrainingRuns"
+                Margin="3"
+                ItemsSource="{Binding Runs}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="{Binding LessonName}" Grid.Column="0"/>
+                                <Label Text="{Binding StartDate}"  Grid.Column="1"/>
+                                <!--<Label Text="{Binding EndDate}"  Grid.Column="2"/>-->
+                                <Label Text="{Binding PercentCorrect}" Grid.Column="2" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        <!--<dg:DataGrid 
                 x:Name="dgTrainingRuns"
                 Margin="3"
                 ItemsSource="{Binding Runs}"
                 SelectionEnabled="False" >
 
 
-            <!-- Defining columns for the data grid -->
-            <!-- Adjust the PropertyName, and other details as per your dataset -->
+            --><!-- Defining columns for the data grid -->
+            <!-- Adjust the PropertyName, and other details as per your dataset --><!--
             <dg:DataGrid.Columns>
-                <!--<dg:DataGridColumn Title="Image" PropertyName="Image" Width="70"
+                --><!--<dg:DataGridColumn Title="Image" PropertyName="Image" Width="70"
                          SortingEnabled="True">
                         <dg:DataGridColumn.CellTemplate>
                             <DataTemplate>
                                 <Image Source="{Binding Image}" Aspect="AspectFill" />
                             </DataTemplate>
                         </dg:DataGridColumn.CellTemplate>
-                    </dg:DataGridColumn>-->
+                    </dg:DataGridColumn>--><!--
 
                 <dg:DataGridColumn 
                         Title="Lesson" 
@@ -63,18 +86,18 @@
                         Title="Training count" 
                         PropertyName="Count" />
 
-                <!-- Add more columns as needed for your dataset -->
+                --><!-- Add more columns as needed for your dataset --><!--
 
             </dg:DataGrid.Columns>
 
-            <!-- Defining row color settings -->
+            --><!-- Defining row color settings --><!--
             <dg:DataGrid.RowsBackgroundColorPalette>
                 <dg:PaletteCollection>
                     <Color>White</Color>
                     <Color>LightGray</Color>
                 </dg:PaletteCollection>
             </dg:DataGrid.RowsBackgroundColorPalette>
-            </dg:DataGrid>
+            </dg:DataGrid>-->
 
     </VerticalStackLayout>
         </ScrollView>

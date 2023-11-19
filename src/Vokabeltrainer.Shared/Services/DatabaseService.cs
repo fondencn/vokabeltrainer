@@ -29,7 +29,7 @@ namespace VokabelTrainer.Services
 #if IS_MODEL
         private const string Settings_DBPath = "../VokabelTrainer/Resources/Raw/Vokabeln.db";
 #else
-        private static string Settings_DBPath
+        internal static string Settings_DBPath
         {
             get
             {

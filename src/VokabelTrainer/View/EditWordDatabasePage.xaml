@@ -4,6 +4,7 @@
              xmlns:vm="clr-namespace:VokabelTrainer.ViewModel"
              xmlns:dg="clr-namespace:Maui.DataGrid;assembly=Maui.DataGrid"
              x:Class="VokabelTrainer.View.EditWordDatabasePage"
+             NavigatedTo="editWordDatabasePage_NavigatedTo"
              IconImageSource="ico_db.png"
              x:Name="editWordDatabasePage"
              Title="{Binding Title}">
@@ -28,24 +29,32 @@
         <Label Text="Lessons database"
                Style="{StaticResource PageSubHeaderStyle}"/>
         <StackLayout>
-            <!--<ListView x:Name="listViewLessons"
-                      ItemsSource="{Binding Lessons}">
+                <ListView x:Name="listViewLessons"
+                SelectedItem="{Binding SelectedLesson, Mode=TwoWay}"
+                      ItemsSource="{Binding Lessons}" >
+                
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding Name}" WidthRequest="200"/>
-                                <Button Text="➖"  Command="{Binding Source={x:Reference editWordDatabasePage}, Path=BindingContext. RemoveLessonCommand}" CommandParameter="{Binding}"/>
-                            </StackLayout>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="{Binding Name}" Grid.Column="0"/>
+                                <Button Text="➖"  
+                                        Command="{Binding Source={x:Reference editWordDatabasePage}, Path=BindingContext.RemoveLessonCommand}" CommandParameter="{Binding}"
+                                        Grid.Column="1"/>
+                            </Grid>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-            </ListView>-->
-            <dg:DataGrid
+            </ListView>
+                <!--<dg:DataGrid
                 x:Name="dgLessons"
                 SelectionEnabled="True"
                 SelectedItem="{Binding SelectedLesson}"
-                ItemsSource="{Binding Lessons}">
+                ItemsSource="{Binding Lessons, Mode=OneWay}">
                 <dg:DataGrid.Columns>
                     <dg:DataGridColumn 
                         Title="Name"
@@ -65,14 +74,14 @@
                     </dg:DataGridColumn>
                 </dg:DataGrid.Columns>
 
-                <!-- Defining row color settings -->
+                --><!-- Defining row color settings --><!--
                 <dg:DataGrid.RowsBackgroundColorPalette>
                     <dg:PaletteCollection>
                         <Color>White</Color>
                         <Color>LightGray</Color>
                     </dg:PaletteCollection>
                 </dg:DataGrid.RowsBackgroundColorPalette>
-            </dg:DataGrid>
+            </dg:DataGrid>-->
             <Label Text="Add a new lesson:" FontAttributes="Italic" Margin="0,10,0,0"/>
             <StackLayout Orientation="Horizontal">
                 <Entry x:Name="nameEntry" Text="{Binding NewLessonName}" Placeholder="Name" WidthRequest="200" />
@@ -84,41 +93,51 @@
         <!-- *****************************************  -->
         <Label Text="Words database"
                Margin="0,10,0,0"
+               IsVisible="{Binding IsLessonSelected}"
                Style="{StaticResource PageSubHeaderStyle}"/>
         <StackLayout>
-            <!--<ListView x:Name="listViewWords"
-                      ItemsSource="{Binding Words}">
+                <ListView x:Name="listViewWords"
+                    ItemsSource="{Binding SelectedLesson.Words}"
+                    IsVisible="{Binding IsLessonSelected}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding OwnWord}" />
-                                <Label Text="{Binding ForeignWord}" />
-                                <Label Text="{Binding Info}" />
-                                <Button Text="➖"  Command="{Binding Source={x:Reference editWordDatabasePage} , Path=BindingContext.RemoveWordCommand}" CommandParameter="{Binding}"/>
-                            </StackLayout>
+                            <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                <Label Text="{Binding ForeignWord}" Grid.Column="0"/>
+                                    <Label Text="{Binding OwnWord}"  Grid.Column="1"/>
+                                    <Label Text="{Binding Info}" Grid.Column="2" />
+                                    <Button  Grid.Column="3"
+                                        Text="➖"  Command="{Binding Source={x:Reference editWordDatabasePage} , Path=BindingContext.RemoveWordCommand}" CommandParameter="{Binding}"/>
+                                </Grid>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-            </ListView>-->
+            </ListView>
 
-            <dg:DataGrid 
+            <!--<dg:DataGrid 
                 x:Name="dgWords"
                 ItemsSource="{Binding SelectedLesson.Words}"
+                IsVisible="{Binding IsLessonSelected}"
                 SelectionEnabled="False" >
 
 
-                <!-- Defining columns for the data grid -->
-                <!-- Adjust the PropertyName, and other details as per your dataset -->
+                --><!-- Defining columns for the data grid -->
+                <!-- Adjust the PropertyName, and other details as per your dataset --><!--
                 <dg:DataGrid.Columns>
-                    <!--<dg:DataGridColumn Title="Image" PropertyName="Image" Width="70"
+                    --><!--<dg:DataGridColumn Title="Image" PropertyName="Image" Width="70"
                          SortingEnabled="True">
                         <dg:DataGridColumn.CellTemplate>
                             <DataTemplate>
                                 <Image Source="{Binding Image}" Aspect="AspectFill" />
                             </DataTemplate>
                         </dg:DataGridColumn.CellTemplate>
-                    </dg:DataGridColumn>-->
+                    </dg:DataGridColumn>--><!--
 
                     <dg:DataGridColumn 
                         Title="Foreign word" 
@@ -144,18 +163,18 @@
                         </dg:DataGridColumn.CellTemplate>
                     </dg:DataGridColumn>
 
-                    <!-- Add more columns as needed for your dataset -->
+                    --><!-- Add more columns as needed for your dataset --><!--
 
                 </dg:DataGrid.Columns>
 
-                <!-- Defining row color settings -->
+                --><!-- Defining row color settings --><!--
                 <dg:DataGrid.RowsBackgroundColorPalette>
                     <dg:PaletteCollection>
                         <Color>White</Color>
                         <Color>LightGray</Color>
                     </dg:PaletteCollection>
                 </dg:DataGrid.RowsBackgroundColorPalette>
-            </dg:DataGrid>
+            </dg:DataGrid>-->
 
             <Label Text="Add a new word:" FontAttributes="Italic" Margin="0,10,0,0" IsVisible="{Binding IsLessonSelected}"/>
 

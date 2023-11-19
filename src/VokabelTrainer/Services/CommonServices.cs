@@ -40,7 +40,8 @@ namespace VokabelTrainer.Services
             builder.Services.AddSingleton(settings);
             DatabaseService db = new DatabaseService();
             builder.Services.AddSingleton<IDatabase>(db);
-            builder.Services.AddDbContext<DatabaseService>(options => options.UseSqlite("Filename=" + settings.Load().DBPath));
+            string dbPath = settings.Load().DBPath;
+            builder.Services.AddDbContext<DatabaseService>(options => options.UseSqlite("Filename=" + dbPath));
             builder.Services.AddSingleton<IPropabilityGenerator>(new PropabilityGeneratorService());
             builder.Services.AddSingleton<INavigationService>(new NavigationService());
 
@@ -61,6 +62,11 @@ namespace VokabelTrainer.Services
 
             // Apply db schema upon startup
             db.Database.Migrate();
+            string actualDbPath = DatabaseService.Settings_DBPath;
+            if (!File.Exists(actualDbPath))
+            {
+                throw new InvalidOperationException("Database file does not exist after db.Database.Migrate() -> Crashing now...");
+            }
             return app;
         }
     }
