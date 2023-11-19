@@ -47,8 +47,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Resources\Images\crying_owl.jpg" />
     <None Remove="Resources\Images\party_owl.jpg" />
+    <None Remove="Resources\Images\thinking_owl.jpg" />
     <None Remove="Resources\Splash\splash.png" />
   </ItemGroup>
 

@@ -10,6 +10,8 @@ namespace VokabelTrainer.Model.Api
     {
         Task Navigate<T>();
 
+        Task<object> Navigate(Type pageType);
+
         Task Back();
     }
 }

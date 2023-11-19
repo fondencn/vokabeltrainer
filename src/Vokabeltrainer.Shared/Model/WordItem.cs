@@ -11,12 +11,15 @@ namespace VokabelTrainer.Model
     [Table("Words")]
     public class WordItem
     {
-
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        [ForeignKey("Lesson")]
+        public int Id_Lesson { get; set; }
+
         public string OwnWord { get; set; }
         public string ForeignWord { get; set; }
         public string Info { get; set; }
+        public Lesson Lesson { get; set;}
     }
 }

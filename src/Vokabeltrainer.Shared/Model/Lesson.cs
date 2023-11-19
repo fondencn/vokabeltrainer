@@ -17,7 +17,6 @@ namespace VokabelTrainer.Model
         public int Id { get; set; }
         public string Name { get; set; }
 
-        [NotMapped]
-        public IList<WordItem> Items { get; } = new List<WordItem>();
+        public IList<WordItem> Words { get; } = new List<WordItem>();
     }
 }

@@ -17,7 +17,7 @@ namespace VokabelTrainer.ViewModel
         private RelayCommand _guessCommand = null;
         private RelayCommand _continueCommand = null;
 
-        public override string Title => "Runde für " + Lesson.Name;
+        public override string Title => "Training for Lesson  \"" + Lesson.Name + "\"";
 
         public LessonViewModel Lesson { get; }
 
@@ -30,6 +30,10 @@ namespace VokabelTrainer.ViewModel
         public RunPageViewModel(LessonViewModel lesson)
         {
             Lesson = lesson;
+            this.Continue();
+
+            this.AddPropertyChangedHandler(nameof(CurrentGuess), () => OnPropertyChanged(nameof(IsCheckEnabled)));
+            this.AddPropertyChangedHandler(nameof(IsCurrentGuessCorrect), () => OnPropertyChanged(nameof(IsCheckEnabled)));
         }
 
 
@@ -46,6 +50,7 @@ namespace VokabelTrainer.ViewModel
             set => SetProperty(ref _isCurrentGuessWrong, value); 
         }
 
+        public bool IsCheckEnabled => !String.IsNullOrWhiteSpace(this.CurrentGuess) && !this.IsCurrentGuessCorrect;
 
         public string CurrentGuess
         {
@@ -94,6 +99,7 @@ namespace VokabelTrainer.ViewModel
             this.CurrentWord = null;
             this.IsCurrentGuessCorrect = false;
             this.IsCurrentGuessWrong = false;
+
 
             this.CurrentWord = new WordViewModel( CommonServices.Instance.Propability.GetNextWord());
         }

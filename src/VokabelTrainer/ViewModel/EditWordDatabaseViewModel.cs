@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,13 +19,23 @@ namespace VokabelTrainer.ViewModel
         private RelayCommand _AddWordCommand = null;
         private RelayCommand<WordViewModel> _RemoveWordCommand = null;
 
+        private string _NewEntryInfo;
+        private LessonViewModel _SelectedLesson;
+        private string _NewLessonName;
+        private string _NewEntryKey;
+        private string _NewEntryValue;
+
 
         public override string Title => "Edit training data";
 
         public ObservableCollection<LessonViewModel> Lessons { get; } = new ObservableCollection<LessonViewModel>();
-        public ObservableCollection<WordViewModel> Words  { get; } = new ObservableCollection<WordViewModel>();
 
-        private string _NewLessonName;
+        public LessonViewModel SelectedLesson 
+        { 
+            get => _SelectedLesson;
+            set => SetProperty(ref _SelectedLesson, value); 
+        }
+
 
         public string NewLessonName
         {
@@ -31,7 +43,6 @@ namespace VokabelTrainer.ViewModel
             set { SetProperty(ref _NewLessonName, value); }
         }
 
-        private string _NewEntryKey;
 
         public string NewEntryKey
         {
@@ -39,7 +50,6 @@ namespace VokabelTrainer.ViewModel
             set { SetProperty(ref _NewEntryKey, value); }
         }
 
-        private string _NewEntryValue;
 
         public string NewEntryValue
         {
@@ -48,30 +58,32 @@ namespace VokabelTrainer.ViewModel
         }
 
 
-        private string _NewEntryInfo;
-
         public string NewEntryInfo
         {
             get { return _NewEntryInfo; }
             set { SetProperty(ref _NewEntryInfo, value); }
         }
 
-
+        public bool IsLessonSelected => this.SelectedLesson != null;
 
         public EditWordDatabaseViewModel()
         {
+            this.AddPropertyChangedHandler(nameof(SelectedLesson), () => OnPropertyChanged(nameof(IsLessonSelected)));
             Load();
         }
 
         public void Load()
         {
-            this.Words.Clear();
             this.Lessons.Clear();
-            foreach (var item in CommonServices.Instance.Database.Words.Select(item => new WordViewModel(item)))
-            {
-                this.Words.Add(item);
-            }
-            foreach(var item in CommonServices.Instance.Database.Lessons.Select(item => new LessonViewModel(item)))
+            this.SelectedLesson = null;
+            this.NewEntryInfo = null;
+            this.NewEntryKey = null;
+            this.NewEntryValue = null;
+            this.NewLessonName = null;
+
+            foreach(var item in CommonServices.Instance.Database.Lessons
+                .Include(item => item.Words)
+                .Select(item => new LessonViewModel(item)))
             {
                 this.Lessons.Add(item);
             }
@@ -127,17 +139,20 @@ namespace VokabelTrainer.ViewModel
 
         public void AddWord()
         {
-            if (!String.IsNullOrWhiteSpace(NewEntryKey) && !String.IsNullOrWhiteSpace(NewEntryValue))
+            if (!String.IsNullOrWhiteSpace(NewEntryKey) && !String.IsNullOrWhiteSpace(NewEntryValue) && this.SelectedLesson != null)
             {
                 WordItem item = new WordItem()
                 {
                     ForeignWord = NewEntryKey,
                     OwnWord = NewEntryValue, 
-                    Info = NewEntryInfo ?? String.Empty
+                    Info = NewEntryInfo ?? String.Empty, 
+                    Id_Lesson = this.SelectedLesson.Id,
+                    Lesson = this.SelectedLesson.Model
                 };
                 CommonServices.Instance.Database.Words.Add(item);
                 CommonServices.Instance.Database.SaveChanges();
-                this.Words.Add(new WordViewModel(item));
+                WordViewModel wvm = new WordViewModel(item);
+                this.SelectedLesson.Words.Add(wvm);
                 this.NewEntryKey = null;
                 this.NewEntryValue = null;
             }
@@ -149,7 +164,7 @@ namespace VokabelTrainer.ViewModel
             {
                 CommonServices.Instance.Database.Words.Remove(item.Model);
                 CommonServices.Instance.Database.SaveChanges();
-                this.Words.Remove(item);
+                this.SelectedLesson.Words.Remove(item);
             }
         }
 
@@ -173,6 +188,10 @@ namespace VokabelTrainer.ViewModel
         {
             if (item != null)
             {
+                foreach(var word in item.Words)
+                {
+                    CommonServices.Instance.Database.Words.Remove(word.Model);
+                }
                 CommonServices.Instance.Database.Lessons.Remove(item.Model);
                 CommonServices.Instance.Database.SaveChanges();
                 this.Lessons.Remove(item);

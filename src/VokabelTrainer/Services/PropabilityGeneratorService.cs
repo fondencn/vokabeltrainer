@@ -21,7 +21,7 @@ namespace VokabelTrainer.Services
             _currentLesson = lesson;
             if(lesson != null)
             {
-                _words = lesson.Items.ToArray();
+                _words = lesson.Words.ToArray();
                 _rand = new Random((int)(DateTime.Now.Ticks % Int32.MaxValue));
             } 
             else
@@ -35,7 +35,7 @@ namespace VokabelTrainer.Services
         {
             if (_words != null)
             {
-                int randomIndex = _rand.Next(0, _words.Length);
+                int randomIndex = _rand.Next(0, _words.Length - 1);
                 return _words[randomIndex];
             } 
             else

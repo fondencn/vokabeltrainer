@@ -59,6 +59,10 @@ namespace VokabelTrainer.ViewModel
         public TModel Model { get; }
         public BaseViewModel(TModel model)
         {
+            if(model == null)
+            {
+                throw new ArgumentNullException(nameof(model), "Es muss ein gültiges Model-Objekt vom Typ " + typeof(TModel).Name + " übergeben werden!");
+            }
             Model = model;  
         }
     }

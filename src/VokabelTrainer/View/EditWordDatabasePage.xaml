@@ -41,7 +41,8 @@
             </ListView>-->
             <dg:DataGrid
                 x:Name="dgLessons"
-                SelectionEnabled="False"
+                SelectionEnabled="True"
+                SelectedItem="{Binding SelectedLesson}"
                 ItemsSource="{Binding Lessons}">
                 <dg:DataGrid.Columns>
                     <dg:DataGridColumn 
@@ -101,7 +102,7 @@
 
             <dg:DataGrid 
                 x:Name="dgWords"
-                ItemsSource="{Binding Words}"
+                ItemsSource="{Binding SelectedLesson.Words}"
                 SelectionEnabled="False" >
 
 
@@ -118,12 +119,12 @@
                     </dg:DataGridColumn>-->
 
                     <dg:DataGridColumn 
-                        Title="Own word" 
-                        PropertyName="OwnWord" 
-                        SortingEnabled="True" />
-                    <dg:DataGridColumn 
                         Title="Foreign word" 
                         PropertyName="ForeignWord" 
+                        SortingEnabled="True" />
+                    <dg:DataGridColumn 
+                        Title="Own word" 
+                        PropertyName="OwnWord" 
                         SortingEnabled="True" />
                     <dg:DataGridColumn 
                         Title="Info" 
@@ -154,14 +155,18 @@
                 </dg:DataGrid.RowsBackgroundColorPalette>
             </dg:DataGrid>
 
-            <Label Text="Add a new word:" FontAttributes="Italic" Margin="0,10,0,0"/>
+            <Label Text="Add a new word:" FontAttributes="Italic" Margin="0,10,0,0" IsVisible="{Binding IsLessonSelected}"/>
 
-            <StackLayout Orientation="Horizontal">
-                <Entry x:Name="keyEntry" Text="{Binding NewEntryKey}" Placeholder="Foreign word" WidthRequest="100"/>
-                <Entry x:Name="valueEntry" Text="{Binding NewEntryValue}" Placeholder="Own word"  WidthRequest="100" Margin="5,0,5,0"/>
-                <Entry x:Name="infoEntry" Text="{Binding NewEntryInfo}" Placeholder="Info"  WidthRequest="100" Margin="5,0,5,0"/>
-                <Button Text="➕ Add"  Command="{Binding AddWordCommand}"/>
-            </StackLayout>
+            <FlexLayout 
+                Direction="Row" 
+                Wrap="Wrap"
+                IsVisible="{Binding IsLessonSelected}">
+                <Entry x:Name="keyEntry" Text="{Binding NewEntryKey}" Placeholder="Foreign word" WidthRequest="150" Margin="3"/>
+                <Entry x:Name="valueEntry" Text="{Binding NewEntryValue}" Placeholder="Own word"  WidthRequest="150" Margin="3"/>
+                <Entry x:Name="infoEntry" Text="{Binding NewEntryInfo}" Placeholder="Info"  WidthRequest="150" Margin="3"/>
+                <Picker x:Name="lessonPicker" ItemsSource="{Binding Lessons}" SelectedItem="{Binding SelectedLesson}" ItemDisplayBinding="{Binding Name}"  WidthRequest="150" Margin="3"/>
+                <Button Text="➕ Add"  Command="{Binding AddWordCommand}" Margin="3" WidthRequest="150"/>
+            </FlexLayout>
         </StackLayout>
 
     </VerticalStackLayout>

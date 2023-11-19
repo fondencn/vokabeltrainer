@@ -25,5 +25,12 @@ namespace VokabelTrainer.Services
         {
             return Shell.Current.Navigation.PopAsync();
         }
+
+        public async Task<object> Navigate(Type pageType)
+        {
+            Page page = (Page)Activator.CreateInstance(pageType);
+            await Shell.Current.Navigation.PushAsync(page, true);
+            return page;
+        }
     }
 }

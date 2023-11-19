@@ -11,6 +11,8 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Migrations\20231112150626_CreateBaseSchema.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Migrations\20231112150626_CreateBaseSchema.Designer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20231119121341_FixWordLessonRelations.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20231119121341_FixWordLessonRelations.Designer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Migrations\DatabaseServiceModelSnapshot.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Api\IAppSettingsService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Api\IDatabase.cs" />
@@ -21,6 +23,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Model\TrainingItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\TrainingRun.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\WordItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\WordLessonRelation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\DatabaseService.cs" />
   </ItemGroup>
   <ItemGroup>

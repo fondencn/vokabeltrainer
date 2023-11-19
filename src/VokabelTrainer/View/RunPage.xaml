@@ -5,46 +5,76 @@
              x:Class="VokabelTrainer.View.RunPage"
              x:DataType="vm:RunPageViewModel"
              Title="{Binding Title}" >
-    <VerticalStackLayout>
-        <Label 
+    <FlexLayout Direction="Row"
+                HorizontalOptions="Center">
+        <VerticalStackLayout
+            Margin="10"
+            IsVisible="{Binding IsCurrentGuessCorrect}">
+            <Image 
+                Source="party_owl.jpg" 
+                Margin="3"
+                MaximumWidthRequest="200"/>
+            <Label 
+                HorizontalOptions="Center"
+                FontAttributes="Italic"
+                Margin="3"
+                Text="Yeehaaaw! That's correct!" />
+        </VerticalStackLayout>
+        <VerticalStackLayout 
+            Margin="10"
+            IsVisible="{Binding IsCurrentGuessWrong}">
+            <Image 
+                Margin="3"
+                Source="thinking_owl.jpg" 
+                MaximumWidthRequest="200"/>
+            <Label 
+                Margin="3"
+                HorizontalOptions="Center"
+                FontAttributes="Italic"
+                Text="Sorry, that's not right. Please try again!" />
+        </VerticalStackLayout>
+
+        <VerticalStackLayout
+                VerticalOptions="Start" 
+                HorizontalOptions="Center"
+            Margin="5">
+            <!--<Label 
             Text="{Binding Title}"
             Style="{StaticResource PageHeaderStyle}"
             VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+            HorizontalOptions="Center" />-->
 
-        <Label Text="Translate to German!"/>
-        <Label 
-            Text="{Binding CurrentWord.ForeignWord}"
-            Style="{StaticResource PageSubHeaderStyle}"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        <Entry Text="{Binding CurrentGuess}"
-            Placeholder="Enter German word!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        <Button Text="Check!"
-            Command="{Binding GuessCommand}"/>
+            <Label Text="Translate the following word: "
+                   Margin="3"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+            <Label 
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Margin="3"
+                    TextColor="{StaticResource Primary}"
+                    Text="{Binding CurrentWord.ForeignWord}"
+                    Style="{StaticResource PageHeaderStyle}" />
+            <Entry Text="{Binding CurrentGuess}"
+                Placeholder="Translation"
+                WidthRequest="150"
+                Margin="5"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />
+            <Button Text="❓❓❓ Check"
+                IsVisible="{Binding IsCheckEnabled}"
+                WidthRequest="150"
+                Margin="5"
+                Command="{Binding GuessCommand}"/>
 
-        <VerticalStackLayout
-            IsVisible="{Binding IsCurrentGuessCorrect}">
-            <Label 
-                Text="Yeehaaaw! That's correct!" />
-            <Image 
-                Source="party_owl.jpg" 
-                MaximumWidthRequest="300"/>
-        </VerticalStackLayout>
-        <VerticalStackLayout 
-            IsVisible="{Binding IsCurrentGuessWrong}">
-            <Label 
-                Text="Sorry, that's not right. Please try again!" />
-            <Image 
-                Source="crying_owl.jpg" 
-                MaximumWidthRequest="300"/>
-        </VerticalStackLayout>
-            
-        <Button 
+            <Button 
             Text="➡ Continue" 
+            Margin="3"
+            WidthRequest="150"
+            HorizontalOptions="Center"
             IsVisible="{Binding IsCurrentGuessCorrect}"
             Command="{Binding ContinueCommand}"/>
-    </VerticalStackLayout>
+        </VerticalStackLayout>
+    </FlexLayout>
+
 </ContentPage>

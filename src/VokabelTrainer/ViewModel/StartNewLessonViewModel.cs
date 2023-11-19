@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using VokabelTrainer.Services;
+using VokabelTrainer.View;
 
 namespace VokabelTrainer.ViewModel
 {
@@ -29,7 +31,8 @@ namespace VokabelTrainer.ViewModel
         {
             this.Lessons.Clear();
             this.SelectedLesson = null;
-            foreach (var item in CommonServices.Instance.Database.Lessons)
+            foreach (var item in CommonServices.Instance.Database.Lessons
+                .Include(item => item.Words))
             {
                 this.Lessons.Add(new LessonViewModel(item));
             }
@@ -47,11 +50,15 @@ namespace VokabelTrainer.ViewModel
             }
         }
 
-        public void StartLesson()
+        public async void StartLesson()
         {
             if(this.SelectedLesson != null)
             {
-
+                CommonServices.Instance.Propability.LoadFor(this.SelectedLesson.Model);
+                RunPageViewModel vm = new RunPageViewModel(this.SelectedLesson);
+                Page page = (Page) await CommonServices.Instance.Navigation.Navigate(typeof(RunPage));
+                page.BindingContext = vm;
+                
             }
         }
     }

@@ -4,7 +4,6 @@
     {
         public string Username { get; set; }
         public string DBPath { get; set; } 
-
-
+        public bool IsDarkTheme { get; set; }
     }
 }

@@ -20,11 +20,16 @@
                 SemanticProperties.HeadingLevel="Level1"/>
         </HorizontalStackLayout>
 
-        <Label 
-            Text="Pick a lesson to start!"/>
-        <Picker Title="Pick a lesson"
+        <Picker Title="Pick a lesson to start:"
+                WidthRequest="150"
+                Margin="5"
                 ItemsSource="{Binding Lessons}"
+                ItemDisplayBinding="{Binding Name}"
                 SelectedItem="{Binding SelectedLesson}"/>
-        <Button Text="Start" Command="{Binding StartLessonCommand}"/>
+        <Button 
+            Text="Start" 
+            WidthRequest="150"
+            Margin="5"
+            Command="{Binding StartLessonCommand}"/>
     </VerticalStackLayout>
 </ContentPage>

@@ -9,7 +9,7 @@
         <vm:SettingsViewModel/>
     </ContentPage.BindingContext>
     <VerticalStackLayout
-            HorizontalOptions="StartAndExpand"
+            HorizontalOptions="Center"
             Spacing="25">
         <HorizontalStackLayout>
             <Image Source="ico_settings.png"
@@ -21,12 +21,16 @@
                 SemanticProperties.HeadingLevel="Level1"/>
         </HorizontalStackLayout>
 
-        <Label Text="Username" FontSize="Medium" />
-        <Entry Placeholder="Enter your username" Text="{Binding Username}" />
+        <Label Text="Username" FontSize="Medium" Margin="3"/>
+        <Entry Placeholder="Enter your username" Text="{Binding Username}"  Margin="3"/>
 
-        <Label Text="Database file" FontSize="Medium" Margin="0,20,0,0" />
-        <Entry Placeholder="Enter your DBPath" Text="{Binding DBPath}"/>
 
-        <Button Text="💾 Save" Command="{Binding SaveCommand}"/>
+        <Label Text="Dark Theme" FontSize="Medium"  Margin="3"/>
+        <Slider Value="{Binding IsDarkTheme}"  Margin="3" />
+
+        <Label Text="Database file" FontSize="Medium" Margin="3,20,3,3" />
+        <Entry Placeholder="Enter your DBPath" Text="{Binding DBPath}" Margin="3"/>
+
+        <Button Text="💾 Save" Command="{Binding SaveCommand}" Margin="3"/>
     </VerticalStackLayout>
 </ContentPage>
