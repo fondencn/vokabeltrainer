@@ -45,7 +45,10 @@ namespace VokabelTrainer.ViewModel
 
             this.AddPropertyChangedHandler(nameof(CurrentGuess), () => OnPropertyChanged(nameof(IsCheckEnabled)));
             this.AddPropertyChangedHandler(nameof(IsCurrentGuessCorrect), () => OnPropertyChanged(nameof(IsCheckEnabled)));
+            this.AddPropertyChangedHandler(nameof(IsCurrentGuessCorrect), () => GuessChanged?.Invoke(this, IsCurrentGuessCorrect));
         }
+
+        public event EventHandler<bool> GuessChanged;
 
 
         public bool IsCurrentGuessCorrect

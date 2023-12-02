@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace VokabelTrainer.ViewModel
 {
@@ -12,6 +7,9 @@ namespace VokabelTrainer.ViewModel
     {
 
         public virtual string Title { get; } = "Kein Titel";
+
+
+        private readonly Dictionary<string, List<Action>> _InternalPropertyChangedHandlers = new Dictionary<string, List<Action>>();
 
         protected void OnPropertyChanged([CallerMemberName] string caller = null)
         {
@@ -25,11 +23,32 @@ namespace VokabelTrainer.ViewModel
             value = newVal;
             if (_InternalPropertyChangedHandlers.ContainsKey(caller))
             {
-                _InternalPropertyChangedHandlers[caller]();
+                foreach(Action action in _InternalPropertyChangedHandlers[caller])
+                {
+                    if (MainThread.IsMainThread)
+                    {
+                        action();
+                    }
+                    else
+                    {
+                        MainThread.BeginInvokeOnMainThread(() => action());
+                    }
+                }
             }
+
             if (_InternalPropertyChangedHandlers.ContainsKey("AllProperties"))
             {
-                _InternalPropertyChangedHandlers["AllProperties"]();
+                foreach (Action action in _InternalPropertyChangedHandlers["AllProperties"])
+                {
+                    if (MainThread.IsMainThread)
+                    {
+                        action();
+                    }
+                    else
+                    {
+                        MainThread.BeginInvokeOnMainThread(() => action());
+                    }
+                }
             }
 
             if (MainThread.IsMainThread)
@@ -42,13 +61,17 @@ namespace VokabelTrainer.ViewModel
             }
         }
 
-        private readonly Dictionary<string, Action> _InternalPropertyChangedHandlers = new Dictionary<string, Action>();
 
         protected void AddPropertyChangedHandler(string propName, Action handler)
         {
-            if (!_InternalPropertyChangedHandlers.TryAdd(propName ?? "AllProperties", handler)) 
+            string key = propName ?? "AllProperties";
+            if (!_InternalPropertyChangedHandlers.ContainsKey(key))
             {
-                _InternalPropertyChangedHandlers[propName ?? "AllProperties"] = handler;
+                _InternalPropertyChangedHandlers.Add(key, new List<Action>() { handler });
+            } 
+            else
+            {
+                _InternalPropertyChangedHandlers[key].Add(handler);
             }
         }
     }

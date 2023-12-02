@@ -6,92 +6,10 @@
              x:DataType="vm:RunPageViewModel"
              NavigatedFrom="ContentPage_NavigatedFrom"
              Title="{Binding Title}" >
-    <Grid
-        HorizontalOptions="FillAndExpand"
-        VerticalOptions="FillAndExpand">
-        
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <FlexLayout Direction="Row"
-                    Wrap="Wrap">
 
+    <VerticalStackLayout>
+        <VerticalStackLayout>
 
-            <VerticalStackLayout
-                HorizontalOptions="Start"
-                VerticalOptions="Start">
-                <Label Text="Translate the following word: "
-                   Margin="3"
-                   HorizontalOptions="Center"/>
-                <Label 
-                    HorizontalOptions="Center"
-                    Margin="3"
-                    TextColor="{StaticResource Primary}"
-                    Text="{Binding CurrentWord.ForeignWord}"
-                    Style="{StaticResource PageHeaderStyle}" />
-                <Entry Text="{Binding CurrentGuess}"
-                    Placeholder="Translation"
-                    WidthRequest="150"
-                    Margin="5"
-                    HorizontalOptions="Center" 
-                    ReturnCommand="{Binding GuessCommand}"/>
-                <Button Text="❓❓❓ Check"
-                    Clicked="Button_Clicked"
-                    IsVisible="{Binding IsCheckEnabled}"
-                    WidthRequest="150"
-                    HorizontalOptions="Center" 
-                    Margin="5"
-                    Command="{Binding GuessCommand}"/>
-
-                <Button 
-                    Text="➡ Continue" 
-                    Margin="3"
-                    WidthRequest="150"
-                    HorizontalOptions="Center"
-                    IsVisible="{Binding IsCurrentGuessCorrect}"
-                    Command="{Binding ContinueCommand}"/>
-            </VerticalStackLayout>
-            <VerticalStackLayout
-                HorizontalOptions="Start"
-                VerticalOptions="Start"
-                IsVisible="{Binding IsCurrentGuessCorrect}">
-                <Image 
-                    Source="party_owl.jpg" 
-                    Margin="3"
-                    HorizontalOptions="Center"
-                    WidthRequest="150"/>
-                <Label 
-                    HorizontalOptions="Center"
-                    FontAttributes="Italic"
-                    Margin="3"
-                    Text="Yeehaaaw! That's correct!" />
-            </VerticalStackLayout>
-            <VerticalStackLayout 
-                HorizontalOptions="Start"
-                VerticalOptions="Start"
-                IsVisible="{Binding IsCurrentGuessWrong}">
-                <Image 
-                    Margin="3"
-                    Source="thinking_owl.jpg" 
-                    HorizontalOptions="Center"
-                    WidthRequest="150"/>
-                <Label 
-                    Margin="3"
-                    HorizontalOptions="Center"
-                    FontAttributes="Italic"
-                    Text="Sorry, that's not right." />
-                <Label 
-                    Margin="3"
-                    HorizontalOptions="Center"
-                    FontAttributes="Italic"
-                    Text="Please try again!" />
-            </VerticalStackLayout>
-        </FlexLayout>
-
-        <VerticalStackLayout   Margin="0,20,0,0"
-                               Grid.Row="1">
-            
             <HorizontalStackLayout  VerticalOptions="End" HorizontalOptions="Center">
                 <Label Text="Training statistics: " Margin="3" FontSize="10"/>
                 <Label Text="Correct: " Margin="3" FontSize="10"/>
@@ -99,7 +17,95 @@
                 <Label Text=", words in lesson: " Margin="3" FontSize="10"/>
                 <Label Text="{Binding Lesson.Words.Count}" Margin="3" FontSize="10"/>
             </HorizontalStackLayout>
-            <ProgressBar Progress="{Binding PercentCorrect}" HorizontalOptions="Center" Margin="3" WidthRequest="300"/>
+            <ProgressBar Progress="{Binding PercentCorrect}"
+                        HorizontalOptions="Center" 
+                        VerticalOptions="Start" 
+                        Margin="3" 
+                        WidthRequest="300"/>
+
         </VerticalStackLayout>
-    </Grid>
+
+
+        <VerticalStackLayout 
+                HorizontalOptions="Center">
+            <Label Text="Translate the following word: "
+                  Style="{StaticResource PageHeaderStyle}"
+                   Margin="3"
+                   HorizontalOptions="Center"/>
+            <Label 
+                    HorizontalOptions="Center"
+                    Margin="38"
+                    FontAttributes="Bold"
+                    TextColor="{StaticResource Primary}"
+                    Text="{Binding CurrentWord.ForeignWord}"
+                    Style="{StaticResource PageHeaderStyle}" />
+            <Label Text="Translation: "
+                    HorizontalOptions="Center"
+                    Style="{StaticResource PageHeaderStyle}"
+                    Margin="3"/>
+            <Entry Text="{Binding CurrentGuess}"
+                    FontAttributes="Bold"
+                    HorizontalTextAlignment="Center"
+                    Style="{StaticResource PageHeaderStyle}"
+                    Placeholder="Enter word"
+                    WidthRequest="250"
+                    Margin="5"
+                    HorizontalOptions="Center" 
+                    ReturnCommand="{Binding GuessCommand}"/>
+            
+            <Button Text="❓ Check"
+                    Clicked="Button_Clicked"
+                    IsVisible="{Binding IsCheckEnabled}"
+                    WidthRequest="150"
+                    HorizontalOptions="Center" 
+                    Margin="5"
+                    Command="{Binding GuessCommand}"/>
+
+            <Button 
+                    Text="➡ Continue" 
+                    Margin="3"
+                    WidthRequest="150"
+                    HorizontalOptions="Center"
+                    IsVisible="{Binding IsCurrentGuessCorrect}"
+                    Command="{Binding ContinueCommand}"/>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout
+            IsVisible="{Binding IsCurrentGuessCorrect}"
+            Opacity="0"
+            x:Name="correctImage">
+            <Image 
+                    Source="party_owl.jpg" 
+                    Margin="3"
+                    HorizontalOptions="Center"
+                    WidthRequest="150"/>
+            <Label 
+                    HorizontalOptions="Center"
+                    FontAttributes="Italic"
+                    Margin="3"
+                    Text="Yeehaaaw! That's correct!" />
+        </VerticalStackLayout>
+
+        <VerticalStackLayout
+                IsVisible="{Binding IsCurrentGuessWrong}"
+                Opacity="0"
+                x:Name="incorrectImage"
+                HorizontalOptions="Center" >
+            <Image 
+                    Margin="3"
+                    Source="thinking_owl.jpg" 
+                    HorizontalOptions="Center"
+                    WidthRequest="150"/>
+            <Label 
+                    Margin="3"
+                    HorizontalOptions="Center"
+                    FontAttributes="Italic"
+                    Text="Sorry, that's not right." />
+            <Label 
+                    Margin="3"
+                    HorizontalOptions="Center"
+                    FontAttributes="Italic"
+                    Text="Please try again!" />
+        </VerticalStackLayout>
+    </VerticalStackLayout>
 </ContentPage>
