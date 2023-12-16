@@ -13,10 +13,12 @@ namespace VokabelTrainer.ViewModel
     {
         private bool _isCurrentGuessCorrect;
         private bool _isCurrentGuessWrong;
+        private bool _isTippRequested;
         private string _currentGuess;
         private WordViewModel _currentWord;
         private RelayCommand _guessCommand = null;
         private RelayCommand _continueCommand = null;
+        private RelayCommand _showTippCommand = null;
 
         public override string Title => "Training for Lesson  \"" + Lesson.Name + "\"";
 
@@ -45,10 +47,18 @@ namespace VokabelTrainer.ViewModel
 
             this.AddPropertyChangedHandler(nameof(CurrentGuess), () => OnPropertyChanged(nameof(IsCheckEnabled)));
             this.AddPropertyChangedHandler(nameof(IsCurrentGuessCorrect), () => OnPropertyChanged(nameof(IsCheckEnabled)));
-            this.AddPropertyChangedHandler(nameof(IsCurrentGuessCorrect), () => GuessChanged?.Invoke(this, IsCurrentGuessCorrect));
+            this.AddPropertyChangedHandler(nameof(IsCurrentGuessCorrect), RaiseGuessChanged);
         }
 
         public event EventHandler<bool> GuessChanged;
+
+        private void RaiseGuessChanged()
+        {
+            if (!this._isTippRequested)
+            {
+                this.GuessChanged?.Invoke(this, IsCurrentGuessCorrect);
+            }
+        }
 
 
         public bool IsCurrentGuessCorrect
@@ -69,7 +79,7 @@ namespace VokabelTrainer.ViewModel
         public string CurrentGuess
         {
             get => _currentGuess; 
-            set => SetProperty(ref _currentGuess, value); 
+            set => SetProperty(ref _currentGuess, value?.Trim()); 
         }
 
 
@@ -97,6 +107,20 @@ namespace VokabelTrainer.ViewModel
                 return _continueCommand;
             }
         }
+
+
+        public ICommand ShowTippCommand
+        {
+            get
+            {
+                if (_showTippCommand == null)
+                {
+                    _showTippCommand = new RelayCommand(ShowTipp);
+                }
+                return _showTippCommand;
+            }
+        }
+
 
 
         public void Guess()
@@ -144,6 +168,15 @@ namespace VokabelTrainer.ViewModel
         {
             this.Run.EndDate = DateTime.Now;
             CommonServices.Instance.Database.SaveChanges();
+        }
+
+        public void ShowTipp()
+        {
+            this._isTippRequested = true; //supresses animation on ui
+            this.CurrentGuess = this.CurrentWord.OwnWord;
+            this.IsCurrentGuessCorrect = true;
+            this.IsCurrentGuessWrong = false;
+            this._isTippRequested = false;
         }
     }
 }

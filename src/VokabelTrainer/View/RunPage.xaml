@@ -68,6 +68,14 @@
                     HorizontalOptions="Center"
                     IsVisible="{Binding IsCurrentGuessCorrect}"
                     Command="{Binding ContinueCommand}"/>
+
+            <Button 
+                    Text="ℹ Tipp" 
+                    Margin="3"
+                    WidthRequest="150"
+                    HorizontalOptions="Center"
+                    IsVisible="{Binding IsCurrentGuessWrong}"
+                    Command="{Binding ShowTippCommand}"/>
         </VerticalStackLayout>
 
         <VerticalStackLayout
