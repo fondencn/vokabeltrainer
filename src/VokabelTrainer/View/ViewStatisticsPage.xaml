@@ -2,34 +2,162 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:VokabelTrainer.ViewModel"
-             xmlns:dg="clr-namespace:Maui.DataGrid;assembly=Maui.DataGrid"
              x:Class="VokabelTrainer.View.ViewStatisticsPage"
-             NavigatedTo="ContentPage_NavigatedTo"
              IconImageSource="ico_stats.png"
              Title="{Binding Title}">
     <ContentPage.BindingContext>
         <vm:ViewStatisticsViewModel/>
     </ContentPage.BindingContext>
 
-
-    <ScrollView HorizontalScrollBarVisibility="Never">
-        <VerticalStackLayout
-            Spacing="25">
-        <HorizontalStackLayout>
-            <Image Source="ico_stats.png"
-                   WidthRequest="50"/>
-            <Label 
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Image Source="ico_stats.png"
+                Grid.Column="0" Grid.Row="0"
+               HorizontalOptions="Start"
+                WidthRequest="50"/>
+        <Label 
+                Margin="3"
                 Text="{Binding Title}"
+                Grid.Column="1" Grid.Row="0"
                 Style="{StaticResource PageHeaderStyle}"
                 VerticalOptions="Center"
                 SemanticProperties.HeadingLevel="Level1"/>
-        </HorizontalStackLayout>
-
-
-            <ListView
-                x:Name="dgTrainingRuns"
+        <Label 
                 Margin="3"
-                ItemsSource="{Binding Runs}">
+                Text="Filter: "
+                Grid.Column="0" Grid.Row="1"
+                Style="{StaticResource PageSubHeaderStyle}"
+                VerticalOptions="Center"
+                SemanticProperties.HeadingLevel="Level2"/>
+        <Button Text="❌" 
+                Command="{Binding Filter.ResetCommand}"
+                Margin="3"
+                HorizontalOptions="End"
+                Grid.Column="1" Grid.Row="1"/>
+        <Label 
+                Margin="3"
+                Grid.Column="0" Grid.Row="2"
+                Text="Von: "
+                VerticalOptions="Center"/>
+        <DatePicker
+                Margin="3"
+                Date="{Binding Filter.StartDate, Mode=TwoWay}"
+                Grid.Column="1" Grid.Row="2"/>
+        <Label 
+                Margin="3"
+                Grid.Column="0" Grid.Row="3"
+                Text="Bis: "
+                VerticalOptions="Center"/>
+        <DatePicker
+                Margin="3"
+                Date="{Binding Filter.EndDate, Mode=TwoWay}"
+                Grid.Column="1" Grid.Row="3"/>
+        <Label 
+               Margin="3"
+                Grid.Column="0" Grid.Row="4"
+                Text="Kapitel: "
+                VerticalOptions="Center"/>
+        <Picker
+                Margin="3"
+                SelectedItem="{Binding Filter.Lesson, Mode=TwoWay}"
+                ItemsSource="{Binding Filter.AllLessons}"
+                ItemDisplayBinding="{Binding Name}"
+                Grid.Column="1" Grid.Row="4"/>
+        <Button Text="🔄 Laden" 
+                Command="{Binding LoadCommand}"
+                HorizontalOptions="Fill"
+                Margin="3"
+                Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" />
+
+        <ActivityIndicator
+            IsRunning="{Binding IsBusy}"
+            Margin="3,15,3,3"
+            Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
+
+        <Grid
+            IsVisible="{Binding HasResults}"
+            Margin="3,15,3,3"
+            Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Text="Ergebnisse: " 
+                Margin="3"
+                Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
+                Style="{StaticResource PageSubHeaderStyle}"/>
+            <Label Text="Anzahl Worte: "
+                Margin="3"
+                Grid.Column="0" Grid.Row="1"/>
+            <Label Text="{Binding StatisticResult.WordCount}"
+                Margin="3"
+                Grid.Column="1" Grid.Row="1"/>
+            <Label Text="Korrekte Worte: "
+                Margin="3"
+                Grid.Column="0" Grid.Row="2"/>
+            <Label Text="{Binding StatisticResult.PercentCorrect, StringFormat='{0:P2}'}"
+                Margin="3"
+                Grid.Column="1" Grid.Row="2"/>
+            <Label Text="Übungsdauer: "
+                Margin="3"
+                Grid.Column="0" Grid.Row="3"/>
+            <Label Text="{Binding StatisticResult.Duration}"
+                Margin="3"
+                Grid.Column="1" Grid.Row="3"/>
+
+
+
+
+            <Label Text="Rohdaten: "
+                Margin="3,15,3,3"
+                IsVisible="{Binding HasResults}"
+                Style="{StaticResource PageSubHeaderStyle}"
+                Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"/>
+            
+            <ListView
+                 IsVisible="{Binding HasResults}"
+                 x:Name="dgTrainingRuns"
+                 Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2"
+                 Margin="3,3,3,3" 
+                 HorizontalOptions="Fill" 
+                 VerticalOptions="Fill"
+                 WidthRequest="300"
+                 VerticalScrollBarVisibility="Always"
+                 ItemsSource="{Binding Runs}">
+                <ListView.Header>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Text="Kapitel" FontAttributes="Bold" Grid.Column="0"/>
+                        <Label Text="Start" FontAttributes="Bold"  Grid.Column="1"/>
+                        <Label Text="Ende" FontAttributes="Bold"  Grid.Column="2"/>
+                        <Label Text="% Korrekt"  FontAttributes="Bold" Grid.Column="3" />
+                    </Grid>
+                </ListView.Header>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -38,67 +166,18 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <Label Text="{Binding LessonName}" Grid.Column="0"/>
                                 <Label Text="{Binding StartDate}"  Grid.Column="1"/>
-                                <!--<Label Text="{Binding EndDate}"  Grid.Column="2"/>-->
-                                <Label Text="{Binding PercentCorrect}" Grid.Column="2" />
+                                <Label Text="{Binding EndDate}"  Grid.Column="2"/>
+                                <Label Text="{Binding PercentCorrect}" Grid.Column="3" />
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+        </Grid>
+    </Grid>
 
-        <!--<dg:DataGrid 
-                x:Name="dgTrainingRuns"
-                Margin="3"
-                ItemsSource="{Binding Runs}"
-                SelectionEnabled="False" >
-
-
-            --><!-- Defining columns for the data grid -->
-            <!-- Adjust the PropertyName, and other details as per your dataset --><!--
-            <dg:DataGrid.Columns>
-                --><!--<dg:DataGridColumn Title="Image" PropertyName="Image" Width="70"
-                         SortingEnabled="True">
-                        <dg:DataGridColumn.CellTemplate>
-                            <DataTemplate>
-                                <Image Source="{Binding Image}" Aspect="AspectFill" />
-                            </DataTemplate>
-                        </dg:DataGridColumn.CellTemplate>
-                    </dg:DataGridColumn>--><!--
-
-                <dg:DataGridColumn 
-                        Title="Lesson" 
-                        PropertyName="LessonName" 
-                        SortingEnabled="True" />
-                <dg:DataGridColumn 
-                        Title="Start" 
-                        PropertyName="StartDate" 
-                        SortingEnabled="True" />
-                <dg:DataGridColumn 
-                        Title="End" 
-                        PropertyName="EndDate" />
-                <dg:DataGridColumn 
-                        Title="Correct %" 
-                        PropertyName="PercentCorrect" />
-                <dg:DataGridColumn 
-                        Title="Training count" 
-                        PropertyName="Count" />
-
-                --><!-- Add more columns as needed for your dataset --><!--
-
-            </dg:DataGrid.Columns>
-
-            --><!-- Defining row color settings --><!--
-            <dg:DataGrid.RowsBackgroundColorPalette>
-                <dg:PaletteCollection>
-                    <Color>White</Color>
-                    <Color>LightGray</Color>
-                </dg:PaletteCollection>
-            </dg:DataGrid.RowsBackgroundColorPalette>
-            </dg:DataGrid>-->
-
-    </VerticalStackLayout>
-        </ScrollView>
 </ContentPage>

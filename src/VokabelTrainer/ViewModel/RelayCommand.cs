@@ -54,4 +54,29 @@ namespace VokabelTrainer.ViewModel
 
         public void Execute(object parameter) => execute();
     }
+
+
+    internal class AsyncRelayCommand : ICommand
+    {
+        private readonly Func<bool> canExecute;
+        private readonly Func<Task> execute;
+
+        public event EventHandler CanExecuteChanged;
+
+        public AsyncRelayCommand(Func<Task> execute) : this(null, execute)
+        {
+        }
+
+        public AsyncRelayCommand(Func<bool> canExecute, Func<Task> execute)
+        {
+            this.canExecute = canExecute;
+            this.execute = execute;
+        }
+
+        public void RaiseCanExecuteChanged() => this.CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+
+        public bool CanExecute(object parameter) => canExecute == null ? true : canExecute();
+
+        public void Execute(object parameter) => execute();
+    }
 }
