@@ -94,7 +94,10 @@ namespace VokabelTrainer.ViewModel
 
 
                 this.StatisticResult = await UpdateStatistics(runs);
-                this.Runs = new ObservableCollection<RunViewModel>(runs);
+                if (runs.Any())
+                {
+                    this.Runs = new ObservableCollection<RunViewModel>(runs);
+                }
                 this.IsBusy = false;
             }
         }
@@ -105,9 +108,12 @@ namespace VokabelTrainer.ViewModel
             await Task.Run(() =>
             {
                 result = new StatisticResultViewModel();
-                result.Duration = TimeSpan.FromSeconds(runs.Sum(item => item.Model.EndDate < item.Model.StartDate ? 1 : (item.Model.EndDate - item.Model.StartDate).TotalSeconds));
-                result.WordCount = runs.Sum(item => (item.Count));
-                result.PercentCorrect = runs.Average(item => item.Model.PercentCorrect);
+                if (runs.Any())
+                {
+                    result.Duration = TimeSpan.FromSeconds(runs.Sum(item => item.Model.EndDate < item.Model.StartDate ? 1 : (item.Model.EndDate - item.Model.StartDate).TotalSeconds));
+                    result.WordCount = runs.Sum(item => (item.Count));
+                    result.PercentCorrect = runs.Average(item => item.Model.PercentCorrect);
+                }
             });
 
             return result;
