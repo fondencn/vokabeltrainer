@@ -22,6 +22,10 @@ jobs:
         dotnet-version: 7.0.x
     - name: Restore Maui Workloads
       run: dotnet workload restore --project src/VokabelTrainer/VokabelTrainer.csproj
+    - uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '17'
     - name: Restore dependencies
       run: dotnet restore src/VokabelTrainer.sln
     - name: Build
