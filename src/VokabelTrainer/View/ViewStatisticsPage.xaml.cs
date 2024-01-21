@@ -9,8 +9,4 @@ public partial class ViewStatisticsPage : ContentPage
 		InitializeComponent();
 	}
 
-    private void ContentPage_NavigatedTo(object sender, NavigatedToEventArgs e)
-    {
-		((ViewStatisticsViewModel)this.BindingContext).Load();
-    }
 }

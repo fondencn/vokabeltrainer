@@ -13,7 +13,8 @@ namespace VokabelTrainer.Services
     public class DatabaseService : DbContext, IDatabase
     {
         #region IDatabase Implementation
-        void IDatabase.SaveChanges() => this.SaveChanges();
+        int IDatabase.SaveChanges() => this.SaveChanges();
+        Task<int> IDatabase.SaveChangesAsync() => this.SaveChangesAsync();
 
         public DbSet<Lesson> Lessons => this.Set<Lesson>();
         public DbSet<WordItem> Words => this.Set<WordItem>();

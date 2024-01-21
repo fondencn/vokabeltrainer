@@ -16,7 +16,7 @@ namespace VokabelTrainer.ViewModel
     {
         private RelayCommand _AddLessonCommand = null;
         private RelayCommand<LessonViewModel> _RemoveLessonCommand = null;
-        private RelayCommand _AddWordCommand = null;
+        private AsyncRelayCommand _AddWordCommand = null;
         private RelayCommand<WordViewModel> _RemoveWordCommand = null;
 
         private string _NewEntryInfo;
@@ -95,7 +95,7 @@ namespace VokabelTrainer.ViewModel
             {
                 if (_AddWordCommand == null)
                 {
-                    _AddWordCommand = new RelayCommand(AddWord);
+                    _AddWordCommand = new AsyncRelayCommand(AddWord);
                 }
                 return _AddWordCommand;
             }
@@ -137,25 +137,32 @@ namespace VokabelTrainer.ViewModel
             }
         }
 
-        public void AddWord()
+        public async Task AddWord()
         {
-            if (!String.IsNullOrWhiteSpace(NewEntryKey) && !String.IsNullOrWhiteSpace(NewEntryValue) && this.SelectedLesson != null)
+            try
             {
-                WordItem item = new WordItem()
+                if (!String.IsNullOrWhiteSpace(NewEntryKey) && !String.IsNullOrWhiteSpace(NewEntryValue) && this.SelectedLesson != null)
                 {
-                    ForeignWord = NewEntryKey,
-                    OwnWord = NewEntryValue, 
-                    Info = NewEntryInfo ?? String.Empty, 
-                    Id_Lesson = this.SelectedLesson.Id,
-                    Lesson = this.SelectedLesson.Model
-                };
-                CommonServices.Instance.Database.Words.Add(item);
-                CommonServices.Instance.Database.SaveChanges();
-                WordViewModel wvm = new WordViewModel(item);
-                this.SelectedLesson.Words.Add(wvm);
-                this.NewEntryKey = null;
-                this.NewEntryValue = null;
-                this.NewEntryInfo = null;
+                    WordItem item = new WordItem()
+                    {
+                        ForeignWord = NewEntryKey,
+                        OwnWord = NewEntryValue,
+                        Info = NewEntryInfo ?? String.Empty,
+                        Id_Lesson = this.SelectedLesson.Id,
+                        Lesson = this.SelectedLesson.Model
+                    };
+                    CommonServices.Instance.Database.Words.Add(item);
+                    await CommonServices.Instance.Database.SaveChangesAsync();
+                    WordViewModel wvm = new WordViewModel(item);
+                    this.SelectedLesson.Words.Add(wvm);
+                    this.NewEntryKey = null;
+                    this.NewEntryValue = null;
+                    this.NewEntryInfo = null;
+                }
+            } 
+            catch (Exception ex)
+            {
+                await CommonServices.Instance.Dialog.ShowMessageAsync("Fehler beim Speichern", ex.Message);
             }
         }
 

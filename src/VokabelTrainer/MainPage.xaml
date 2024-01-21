@@ -31,12 +31,12 @@
                 FontSize="24"
                 HorizontalOptions="Center" />
 
-            <Button Text="Start new lesson" 
+            <Button Text="Jetzt üben" 
                     WidthRequest="200"
                     HorizontalOptions="Center"
                     Clicked="ButtonStartTraining_Clicked"/>
 
-            <Button Text="Open Settings" 
+            <Button Text="Einstellungen öffnen" 
                     WidthRequest="200"
                     HorizontalOptions="Center"
                     Clicked="ButtonSettings_Clicked"/>

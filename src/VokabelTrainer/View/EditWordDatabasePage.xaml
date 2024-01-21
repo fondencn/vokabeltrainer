@@ -28,7 +28,14 @@
         <!-- *****************************************  -->
         <Label Text="Lessons database"
                Style="{StaticResource PageSubHeaderStyle}"/>
-        <StackLayout>
+
+            <Label Text="Add a new lesson:" FontAttributes="Italic" Margin="0,10,0,0"/>
+            <StackLayout Orientation="Horizontal">
+                <Entry x:Name="nameEntry" Text="{Binding NewLessonName}" Placeholder="Name" WidthRequest="200" />
+                <Button Text="➕ Add"  Command="{Binding AddLessonCommand}" Margin="5,0,0,0"/>
+            </StackLayout>
+        
+            <StackLayout>
                 <ListView x:Name="listViewLessons"
                 SelectedItem="{Binding SelectedLesson, Mode=TwoWay}"
                       ItemsSource="{Binding Lessons}" >
@@ -82,11 +89,6 @@
                     </dg:PaletteCollection>
                 </dg:DataGrid.RowsBackgroundColorPalette>
             </dg:DataGrid>-->
-            <Label Text="Add a new lesson:" FontAttributes="Italic" Margin="0,10,0,0"/>
-            <StackLayout Orientation="Horizontal">
-                <Entry x:Name="nameEntry" Text="{Binding NewLessonName}" Placeholder="Name" WidthRequest="200" />
-                <Button Text="➕ Add"  Command="{Binding AddLessonCommand}" Margin="5,0,0,0"/>
-            </StackLayout>
         </StackLayout>
 
 
@@ -96,6 +98,20 @@
                IsVisible="{Binding IsLessonSelected}"
                Style="{StaticResource PageSubHeaderStyle}"/>
         <StackLayout>
+
+                <Label Text="Add a new word:" FontAttributes="Italic" Margin="0,10,0,0" IsVisible="{Binding IsLessonSelected}"/>
+                <FlexLayout 
+                Direction="Row" 
+                Wrap="Wrap"
+                IsVisible="{Binding IsLessonSelected}">
+                    <Entry x:Name="keyEntry" Text="{Binding NewEntryKey}" Placeholder="Foreign word" WidthRequest="150" Margin="3" />
+                    <Entry x:Name="valueEntry" Text="{Binding NewEntryValue}" Placeholder="Own word"  WidthRequest="150" Margin="3" ReturnCommand="{Binding AddWordCommand}"/>
+                    <Entry x:Name="infoEntry" Text="{Binding NewEntryInfo}" Placeholder="Info"  WidthRequest="150" Margin="3"/>
+                    <Picker x:Name="lessonPicker" ItemsSource="{Binding Lessons}" SelectedItem="{Binding SelectedLesson}" ItemDisplayBinding="{Binding Name}"  WidthRequest="150" Margin="3"/>
+                    <Button Text="➕ Add"  Command="{Binding AddWordCommand}" Margin="3" WidthRequest="150"/>
+                </FlexLayout>
+            
+            
                 <ListView x:Name="listViewWords"
                     ItemsSource="{Binding SelectedLesson.Words}"
                     IsVisible="{Binding IsLessonSelected}">
@@ -176,18 +192,6 @@
                 </dg:DataGrid.RowsBackgroundColorPalette>
             </dg:DataGrid>-->
 
-            <Label Text="Add a new word:" FontAttributes="Italic" Margin="0,10,0,0" IsVisible="{Binding IsLessonSelected}"/>
-
-            <FlexLayout 
-                Direction="Row" 
-                Wrap="Wrap"
-                IsVisible="{Binding IsLessonSelected}">
-                <Entry x:Name="keyEntry" Text="{Binding NewEntryKey}" Placeholder="Foreign word" WidthRequest="150" Margin="3"/>
-                <Entry x:Name="valueEntry" Text="{Binding NewEntryValue}" Placeholder="Own word"  WidthRequest="150" Margin="3" ReturnCommand="{Binding AddWordCommand}"/>
-                <Entry x:Name="infoEntry" Text="{Binding NewEntryInfo}" Placeholder="Info"  WidthRequest="150" Margin="3"/>
-                <Picker x:Name="lessonPicker" ItemsSource="{Binding Lessons}" SelectedItem="{Binding SelectedLesson}" ItemDisplayBinding="{Binding Name}"  WidthRequest="150" Margin="3"/>
-                <Button Text="➕ Add"  Command="{Binding AddWordCommand}" Margin="3" WidthRequest="150"/>
-            </FlexLayout>
         </StackLayout>
 
     </VerticalStackLayout>

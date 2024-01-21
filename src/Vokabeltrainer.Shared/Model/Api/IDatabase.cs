@@ -14,6 +14,7 @@ namespace VokabelTrainer.Model.Api
         DbSet<TrainingRun> Runs { get; }
         DbSet<TrainingItem> RunItems { get; }
 
-        void SaveChanges();
+        int SaveChanges();
+        Task<int> SaveChangesAsync();
     }
 }
